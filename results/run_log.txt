@@ -1,0 +1,5 @@
+E1 done in 633s
+E2 done in 23s
+E3 done in 147s
+E4 done in 308s
+all done

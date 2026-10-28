@@ -1,0 +1,81 @@
+E1: runs=3360  MAE vs depth-20 theory at realized phi = 0.0025 (95th pct 0.0057, max 0.408); MAE vs infinite-depth theory = 0.0200
+E1: runs away from threshold (fin~inf within .01): n=3192, MAE=0.0010
+E2 k=1: phi*=0.7222 runs=300 mean=0.042 frac<0.1=0.903 frac>0.4=0.000 median of survivors(>0.1)=0.146 max=0.205
+E2 k=2: phi*=0.1946 runs=300 mean=0.495 frac<0.1=0.203 frac>0.4=0.713 median of survivors(>0.1)=0.666 max=0.821
+E4b k=1 random   h= 1 firms_hit=0.5% supply_share=0.003 rho_sim=0.995+-0.001
+E4b k=1 random   h= 2 firms_hit=1.0% supply_share=0.014 rho_sim=0.989+-0.001
+E4b k=1 random   h= 3 firms_hit=1.5% supply_share=0.018 rho_sim=0.984+-0.001
+E4b k=1 random   h= 4 firms_hit=2.0% supply_share=0.014 rho_sim=0.980+-0.001
+E4b k=1 random   h= 6 firms_hit=3.0% supply_share=0.031 rho_sim=0.970+-0.001
+E4b k=1 random   h= 8 firms_hit=4.0% supply_share=0.041 rho_sim=0.959+-0.002
+E4b k=1 random   h=10 firms_hit=5.0% supply_share=0.049 rho_sim=0.949+-0.002
+E4b k=1 random   h=14 firms_hit=7.0% supply_share=0.084 rho_sim=0.927+-0.004
+E4b k=1 random   h=20 firms_hit=10.0% supply_share=0.087 rho_sim=0.898+-0.003
+E4b k=1 targeted h= 1 firms_hit=0.5% supply_share=0.113 rho_sim=0.992+-0.001
+E4b k=1 targeted h= 2 firms_hit=1.0% supply_share=0.215 rho_sim=0.973+-0.002
+E4b k=1 targeted h= 3 firms_hit=1.5% supply_share=0.250 rho_sim=0.958+-0.002
+E4b k=1 targeted h= 4 firms_hit=2.0% supply_share=0.274 rho_sim=0.944+-0.002
+E4b k=1 targeted h= 6 firms_hit=3.0% supply_share=0.314 rho_sim=0.911+-0.002
+E4b k=1 targeted h= 8 firms_hit=4.0% supply_share=0.345 rho_sim=0.874+-0.002
+E4b k=1 targeted h=10 firms_hit=5.0% supply_share=0.371 rho_sim=0.830+-0.003
+E4b k=1 targeted h=14 firms_hit=7.0% supply_share=0.414 rho_sim=0.704+-0.004
+E4b k=1 targeted h=20 firms_hit=10.0% supply_share=0.469 rho_sim=0.000+-0.000
+E4b k=2 random   h= 1 firms_hit=0.5% supply_share=0.003 rho_sim=0.985+-0.001
+E4b k=2 random   h= 2 firms_hit=1.0% supply_share=0.014 rho_sim=0.929+-0.213
+E4b k=2 random   h= 3 firms_hit=1.5% supply_share=0.018 rho_sim=0.922+-0.212
+E4b k=2 random   h= 4 firms_hit=2.0% supply_share=0.014 rho_sim=0.966+-0.003
+E4b k=2 random   h= 6 firms_hit=3.0% supply_share=0.031 rho_sim=0.857+-0.286
+E4b k=2 random   h= 8 firms_hit=4.0% supply_share=0.041 rho_sim=0.884+-0.203
+E4b k=2 random   h=10 firms_hit=5.0% supply_share=0.049 rho_sim=0.828+-0.276
+E4b k=2 random   h=14 firms_hit=7.0% supply_share=0.084 rho_sim=0.620+-0.406
+E4b k=2 random   h=20 firms_hit=10.0% supply_share=0.087 rho_sim=0.508+-0.389
+E4b k=2 targeted h= 1 firms_hit=0.5% supply_share=0.113 rho_sim=0.000+-0.000
+E4b k=2 targeted h= 2 firms_hit=1.0% supply_share=0.215 rho_sim=0.000+-0.000
+E4b k=2 targeted h= 3 firms_hit=1.5% supply_share=0.250 rho_sim=0.000+-0.000
+E4b k=2 targeted h= 4 firms_hit=2.0% supply_share=0.274 rho_sim=0.000+-0.000
+E4b k=2 targeted h= 6 firms_hit=3.0% supply_share=0.314 rho_sim=0.000+-0.000
+E4b k=2 targeted h= 8 firms_hit=4.0% supply_share=0.345 rho_sim=0.000+-0.000
+E4b k=2 targeted h=10 firms_hit=5.0% supply_share=0.371 rho_sim=0.000+-0.000
+E4b k=2 targeted h=14 firms_hit=7.0% supply_share=0.414 rho_sim=0.000+-0.000
+E4b k=2 targeted h=20 firms_hit=10.0% supply_share=0.469 rho_sim=0.000+-0.000
+E4b: MAE vs depth-20 theory using supply-weighted shock = 0.0022
+E3 k=1 c=1: theory_inf=0.242 theory_D20=0.254 sim=0.255 [0.253,0.258] misclass=0.004 n=270
+E3 k=1 c=2: theory_inf=0.342 theory_D20=0.359 sim=0.357 [0.357,0.360] misclass=0.000 n=270
+E3 k=1 c=4: theory_inf=0.425 theory_D20=0.444 sim=0.445 [0.440,0.450] misclass=0.000 n=270
+E3 k=2 c=1: theory_inf=0.039 theory_D20=0.045 sim=0.042 [0.042,0.045] misclass=0.037 n=270
+E3 k=2 c=2: theory_inf=0.047 theory_D20=0.054 sim=0.053 [0.053,0.055] misclass=0.011 n=270
+E3 k=2 c=4: theory_inf=0.077 theory_D20=0.086 sim=0.085 [0.085,0.087] misclass=0.000 n=270
+E4a alpha=1.25  k=1 phi=0.00: rho=1.000+-0.000
+E4a alpha=1.25  k=1 phi=0.10: rho=0.890+-0.019
+E4a alpha=1.25  k=1 phi=0.20: rho=0.784+-0.029
+E4a alpha=1.25  k=1 phi=0.30: rho=0.655+-0.044
+E4a alpha=1.25  k=1 phi=0.40: rho=0.442+-0.158
+E4a alpha=1.25  k=2 phi=0.00: rho=0.991+-0.001
+E4a alpha=1.25  k=2 phi=0.03: rho=0.938+-0.017
+E4a alpha=1.25  k=2 phi=0.05: rho=0.897+-0.042
+E4a alpha=1.25  k=2 phi=0.07: rho=0.663+-0.335
+E4a alpha=1.25  k=2 phi=0.09: rho=0.119+-0.286
+E4a alpha=2.0   k=1 phi=0.00: rho=1.000+-0.000
+E4a alpha=2.0   k=1 phi=0.10: rho=0.890+-0.019
+E4a alpha=2.0   k=1 phi=0.20: rho=0.784+-0.029
+E4a alpha=2.0   k=1 phi=0.30: rho=0.655+-0.044
+E4a alpha=2.0   k=1 phi=0.40: rho=0.440+-0.160
+E4a alpha=2.0   k=2 phi=0.00: rho=0.991+-0.001
+E4a alpha=2.0   k=2 phi=0.03: rho=0.938+-0.016
+E4a alpha=2.0   k=2 phi=0.05: rho=0.897+-0.043
+E4a alpha=2.0   k=2 phi=0.07: rho=0.602+-0.384
+E4a alpha=2.0   k=2 phi=0.09: rho=0.125+-0.299
+E4a alpha=None  k=1 phi=0.00: rho=1.000+-0.000
+E4a alpha=None  k=1 phi=0.10: rho=0.890+-0.019
+E4a alpha=None  k=1 phi=0.20: rho=0.785+-0.031
+E4a alpha=None  k=1 phi=0.30: rho=0.657+-0.044
+E4a alpha=None  k=1 phi=0.40: rho=0.442+-0.157
+E4a alpha=None  k=2 phi=0.00: rho=0.991+-0.001
+E4a alpha=None  k=2 phi=0.03: rho=0.938+-0.017
+E4a alpha=None  k=2 phi=0.05: rho=0.897+-0.045
+E4a alpha=None  k=2 phi=0.07: rho=0.631+-0.355
+E4a alpha=None  k=2 phi=0.09: rho=0.127+-0.303
+E4a k=1 alpha=2.0: max |mean diff vs uniform| = 0.002
+E4a k=1 alpha=1.25: max |mean diff vs uniform| = 0.001
+E4a k=2 alpha=2.0: max |mean diff vs uniform| = 0.029
+E4a k=2 alpha=1.25: max |mean diff vs uniform| = 0.032
