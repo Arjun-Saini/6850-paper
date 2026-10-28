@@ -17,7 +17,7 @@ for _f in font_manager.findSystemFonts():
     if "texgyretermes" in _f.lower():
         font_manager.fontManager.addfont(_f)
 
-from model import finite_depth, rho
+from model import finite_depth, phi_star, phi_star_closed_form, refinement_violations, rho
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
@@ -88,7 +88,7 @@ out.append(f"E1: runs away from threshold (fin~inf within .01): n={len(far)}, MA
 # ---------------------------------------------------------------- Figure 2: E2 + E4b
 e2 = load("e2.json")
 e4 = load("e4.json")
-fig, ax = plt.subplots(1, 2, figsize=(6.6, 2.05))
+fig, ax = plt.subplots(1, 3, figsize=(6.9, 2.1), gridspec_kw=dict(width_ratios=[1, 1.15, 0.95]))
 bins = np.linspace(0, 1, 21)
 vals, labs = [], []
 for k in (1, 2):
@@ -127,7 +127,24 @@ for k in (1, 2):
 ax[1].set(xlabel="supply-weighted share of clusters hit $\\phi_s$", ylabel="reliability outside hit regions",
           ylim=(-0.03, 1.03), xlim=(0, 0.5), title="(b) Hub regions: random vs targeted shocks")
 ax[1].legend(loc="center", bbox_to_anchor=(0.42, 0.45), ncol=1, handletextpad=0.2, fontsize=6.3)
-fig.tight_layout(pad=0.3, w_pad=1.2)
+# (c) the diversification trap (E5): phi* against cluster count c
+e5 = load("e5.json")
+cs_all = [1, 2, 3, 4, 6]
+pos = {c: i for i, c in enumerate(cs_all)}
+for (m, n, k), col, mk in [((1, 4, 2), BLUE, "o"), ((1, 6, 3), ORANGE, "s"), ((2, 6, 3), AQUA, "^"),
+                           ((3, 4, 2), YELLOW, "D")]:
+    rows = sorted([s for s in e5["summary"] if (s["m"], s["n"], s["k"]) == (m, n, k)], key=lambda s: s["c"])
+    xs_ = [pos[s["c"]] for s in rows]
+    ax[2].plot(xs_, [s["phi_star_depth20"] for s in rows], "-", color=col, lw=1.1)
+    ax[2].errorbar(xs_, [s["phi_star_sim"] for s in rows],
+                   yerr=[[s["phi_star_sim"] - s["ci_lo"] for s in rows], [s["ci_hi"] - s["phi_star_sim"] for s in rows]],
+                   fmt=mk, color=col, ms=3.2, mec="white", mew=0.4, elinewidth=0.8, capsize=1.5,
+                   label=f"$m={m},n={n},k={k}$")
+ax[2].set_xticks(range(len(cs_all)), [str(c) for c in cs_all])
+ax[2].set(xlabel="supplier clusters $c$ (1 = co-located)", ylabel=r"collapse threshold $\phi^*$",
+          title="(c) The diversification trap", ylim=(0, 0.31))
+ax[2].legend(loc="upper center", ncol=2, handletextpad=0.1, columnspacing=0.6, borderaxespad=0.1, fontsize=5.6)
+fig.tight_layout(pad=0.3, w_pad=0.9)
 fig.savefig(os.path.join(FIG, "fig_bimodal_hubs.pdf"))
 e4b_err = np.array([abs(r["rho_sim"] - r["theory_fin"]) for r in b])
 out.append(f"E4b: MAE vs depth-20 theory using supply-weighted shock = {e4b_err.mean():.4f}")
@@ -145,6 +162,44 @@ for k in (1, 2):
     for alpha in ("2.0", "1.25"):
         d = [abs(gm[(alpha, k, p)][0] - gm[("None", k, p)][0]) for (al, kk, p) in gm if al == alpha and kk == k]
         out.append(f"E4a k={k} alpha={alpha}: max |mean diff vs uniform| = {max(d):.3f}")
+
+# ---------------------------------------------------------------- E5, E6, theorem checks
+for s in e5["summary"]:
+    out.append("E5 m={m} n={n} k={k} c={c}: theory_inf={phi_star_theory:.4f} theory_D20={phi_star_depth20:.4f} "
+               "sim={phi_star_sim:.4f} [{ci_lo:.4f},{ci_hi:.4f}] misclass={misclass:.3f} n={n_runs}".format(**s))
+for (m, n, k) in [(2, 4, 1), (2, 4, 2), (3, 4, 2), (1, 4, 2)]:
+    cf = phi_star_closed_form(0.9, m, n, k)
+    out.append(f"THM2 check m={m} n={n} k={k} x=0.9: closed form spread={cf['spread']:.4f} colocated={cf['colocated']:.4f}; "
+               f"numeric spread={phi_star(0.9, m, n, k, n):.4f} colocated={phi_star(0.9, m, n, k, 1):.4f}")
+scan_path = os.path.join(RES, "trap_scan.json")      # slow (~8 min): computed once, then cached
+if not os.path.exists(scan_path):
+    scan = [dict(n=n, k=k, m=m, x=x, violations=[list(v) for v in refinement_violations(x, m, n, k)])
+            for n in (2, 4, 6, 8) for k in range(1, n + 1) for m in (1, 2, 3)
+            for x in (0.6, 0.7, 0.8, 0.9, 0.95, 1.0)]
+    json.dump(scan, open(scan_path, "w"), indent=1)
+scan = load("trap_scan.json")
+cases = len(scan)
+viol = sum(1 for r in scan if r["violations"])
+viol_k1 = sum(1 for r in scan if r["violations"] and r["k"] == 1)
+out.append(f"TRAP scan: cases={cases} violations={viol} (k=1: {viol_k1})")
+for (x, m, n, k) in [(0.9, 1, 4, 2), (0.9, 1, 6, 3), (0.95, 2, 6, 3), (0.9, 2, 6, 3)]:
+    cs = [c for c in range(1, n + 1) if n % c == 0]
+    out.append(f"PHISTAR deep x={x} m={m} n={n} k={k}: " + " ".join(f"c={c}:{phi_star(x, m, n, k, c):.4f}" for c in cs))
+e6 = load("e6.json")
+from model import dgm_er_core_size
+e6_err = []
+for k, qc in e6["theory"].items():
+    rows = collections.defaultdict(list)
+    for r in e6["runs"]:
+        rows[r["Q"]].append(r["sizes"][k])
+        if abs(r["Q"] - qc) > 0.02:
+            e6_err.append(abs(r["sizes"][k] - dgm_er_core_size(int(k), 1 - r["Q"], 10)))
+    lb = max(q for q in rows if q < qc)
+    fa = min((q for q in rows if q > qc), default=float("nan"))
+    out.append(f"E6 k={k}: Qc_theory={qc:.4f} last_Q_below={lb:.3f} size={np.mean(rows[lb]):.3f} "
+               f"first_Q_above={fa:.3f} size={np.mean(rows[fa]) if fa in rows else float('nan'):.3f}")
+out.append(f"E6: MAE vs DGM theory away from thresholds (|Q-Qc|>0.02) = {np.mean(e6_err):.4f} (n={len(e6_err)}, "
+           f"max {np.max(e6_err):.4f})")
 
 open(os.path.join(RES, "summary.txt"), "w").write("\n".join(out) + "\n")
 print("\n".join(out))

@@ -79,3 +79,33 @@ E4a k=1 alpha=2.0: max |mean diff vs uniform| = 0.002
 E4a k=1 alpha=1.25: max |mean diff vs uniform| = 0.001
 E4a k=2 alpha=2.0: max |mean diff vs uniform| = 0.029
 E4a k=2 alpha=1.25: max |mean diff vs uniform| = 0.032
+E5 m=1 n=4 k=2 c=1: theory_inf=0.1946 theory_D20=0.2174 sim=0.2175 [0.2175,0.2200] misclass=0.004 n=270
+E5 m=1 n=4 k=2 c=2: theory_inf=0.1705 theory_D20=0.1946 sim=0.1950 [0.1925,0.1975] misclass=0.004 n=270
+E5 m=1 n=4 k=2 c=4: theory_inf=0.1946 theory_D20=0.2162 sim=0.2175 [0.2175,0.2175] misclass=0.000 n=270
+E5 m=1 n=6 k=3 c=1: theory_inf=0.1878 theory_D20=0.2014 sim=0.2025 [0.2025,0.2025] misclass=0.000 n=270
+E5 m=1 n=6 k=3 c=2: theory_inf=0.1370 theory_D20=0.1504 sim=0.1525 [0.1475,0.1525] misclass=0.011 n=270
+E5 m=1 n=6 k=3 c=3: theory_inf=0.1548 theory_D20=0.1670 sim=0.1675 [0.1675,0.1675] misclass=0.000 n=270
+E5 m=1 n=6 k=3 c=6: theory_inf=0.1878 theory_D20=0.2005 sim=0.2000 [0.1975,0.2025] misclass=0.004 n=270
+E5 m=2 n=6 k=3 c=1: theory_inf=0.0529 theory_D20=0.0569 sim=0.0575 [0.0575,0.0575] misclass=0.000 n=270
+E5 m=2 n=6 k=3 c=2: theory_inf=0.0461 theory_D20=0.0505 sim=0.0525 [0.0500,0.0525] misclass=0.004 n=270
+E5 m=2 n=6 k=3 c=3: theory_inf=0.0665 theory_D20=0.0719 sim=0.0725 [0.0725,0.0725] misclass=0.000 n=270
+E5 m=2 n=6 k=3 c=6: theory_inf=0.1030 theory_D20=0.1100 sim=0.1100 [0.1075,0.1125] misclass=0.015 n=270
+E5 m=3 n=4 k=2 c=1: theory_inf=0.0117 theory_D20=0.0142 sim=0.0125 [0.0125,0.0125] misclass=0.000 n=270
+E5 m=3 n=4 k=2 c=2: theory_inf=0.0170 theory_D20=0.0209 sim=0.0225 [0.0225,0.0225] misclass=0.000 n=270
+E5 m=3 n=4 k=2 c=4: theory_inf=0.0347 theory_D20=0.0415 sim=0.0425 [0.0425,0.0425] misclass=0.000 n=270
+THM2 check m=2 n=4 k=1 x=0.9: closed form spread=0.4249 colocated=0.2417; numeric spread=0.4249 colocated=0.2417
+THM2 check m=2 n=4 k=2 x=0.9: closed form spread=0.0766 colocated=0.0390; numeric spread=0.0766 colocated=0.0390
+THM2 check m=3 n=4 k=2 x=0.9: closed form spread=0.0347 colocated=0.0117; numeric spread=0.0347 colocated=0.0117
+THM2 check m=1 n=4 k=2 x=0.9: closed form spread=0.1946 colocated=0.1946; numeric spread=0.1946 colocated=0.1946
+TRAP scan: cases=360 violations=72 (k=1: 0)
+PHISTAR deep x=0.9 m=1 n=4 k=2: c=1:0.1946 c=2:0.1705 c=4:0.1946
+PHISTAR deep x=0.9 m=1 n=6 k=3: c=1:0.1878 c=2:0.1370 c=3:0.1548 c=6:0.1878
+PHISTAR deep x=0.95 m=2 n=6 k=3: c=1:0.0781 c=2:0.0699 c=3:0.0977 c=6:0.1502
+PHISTAR deep x=0.9 m=2 n=6 k=3: c=1:0.0529 c=2:0.0461 c=3:0.0665 c=6:0.1030
+E6 k=2: Qc_theory=0.8998 last_Q_below=0.890 size=0.001 first_Q_above=0.910 size=0.000
+E6 k=3: Qc_theory=0.6649 last_Q_below=0.655 size=0.142 first_Q_above=0.675 size=0.000
+E6 k=4: Qc_theory=0.4851 last_Q_below=0.475 size=0.287 first_Q_above=0.495 size=0.000
+E6 k=5: Qc_theory=0.3201 last_Q_below=0.310 size=0.444 first_Q_above=0.330 size=0.000
+E6 k=6: Qc_theory=0.1635 last_Q_below=0.153 size=0.599 first_Q_above=0.173 size=0.000
+E6 k=7: Qc_theory=0.0125 last_Q_below=0.002 size=0.735 first_Q_above=0.022 size=0.000
+E6: MAE vs DGM theory away from thresholds (|Q-Qc|>0.02) = 0.0005 (n=178, max 0.0048)
