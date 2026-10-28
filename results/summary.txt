@@ -93,10 +93,10 @@ E5 m=2 n=6 k=3 c=6: theory_inf=0.1030 theory_D20=0.1100 sim=0.1100 [0.1075,0.112
 E5 m=3 n=4 k=2 c=1: theory_inf=0.0117 theory_D20=0.0142 sim=0.0125 [0.0125,0.0125] misclass=0.000 n=270
 E5 m=3 n=4 k=2 c=2: theory_inf=0.0170 theory_D20=0.0209 sim=0.0225 [0.0225,0.0225] misclass=0.000 n=270
 E5 m=3 n=4 k=2 c=4: theory_inf=0.0347 theory_D20=0.0415 sim=0.0425 [0.0425,0.0425] misclass=0.000 n=270
-THM2 check m=2 n=4 k=1 x=0.9: closed form spread=0.4249 colocated=0.2417; numeric spread=0.4249 colocated=0.2417
-THM2 check m=2 n=4 k=2 x=0.9: closed form spread=0.0766 colocated=0.0390; numeric spread=0.0766 colocated=0.0390
-THM2 check m=3 n=4 k=2 x=0.9: closed form spread=0.0347 colocated=0.0117; numeric spread=0.0347 colocated=0.0117
-THM2 check m=1 n=4 k=2 x=0.9: closed form spread=0.1946 colocated=0.1946; numeric spread=0.1946 colocated=0.1946
+THM3 check m=2 n=4 k=1 x=0.9: closed form spread=0.4249 colocated=0.2417; numeric spread=0.4249 colocated=0.2417
+THM3 check m=2 n=4 k=2 x=0.9: closed form spread=0.0766 colocated=0.0390; numeric spread=0.0766 colocated=0.0390
+THM3 check m=3 n=4 k=2 x=0.9: closed form spread=0.0347 colocated=0.0117; numeric spread=0.0347 colocated=0.0117
+THM3 check m=1 n=4 k=2 x=0.9: closed form spread=0.1946 colocated=0.1946; numeric spread=0.1946 colocated=0.1946
 TRAP scan: cases=360 violations=72 (k=1: 0)
 PHISTAR deep x=0.9 m=1 n=4 k=2: c=1:0.1946 c=2:0.1705 c=4:0.1946
 PHISTAR deep x=0.9 m=1 n=6 k=3: c=1:0.1878 c=2:0.1370 c=3:0.1548 c=6:0.1878

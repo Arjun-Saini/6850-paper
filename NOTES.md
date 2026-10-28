@@ -60,7 +60,17 @@ cd .. && pdflatex paper.tex && pdflatex paper.tex
 
 ## Things to look at
 
-1. Section 6's policy sentence: "a buyer that needs two working suppliers per input can be worse off splitting its suppliers
-   between two regions than keeping them together". It is a model result; tone it down if you think it overreaches.
+1. Section 6's policy sentence, now phrased at the network level: "a network whose firms each need two working suppliers per
+   input can be more fragile when every firm splits its suppliers between two regions than when every firm keeps them
+   together". φ* is a network-wide threshold, so it says nothing about a single firm deviating alone.
 2. CNST was cut the hardest. If you would rather cut DGM's weaknesses paragraph, there is room to restore about 4 lines.
 3. Page 5 has roughly a quarter page free for anything you want to add back.
+
+## Review fixes (after an independent review of the whole branch)
+
+- Text: the trap is stated as "can be" (it does not hold for every parameter set, e.g. m = 2, n = 4, k = 2 is monotone);
+  the policy sentence is network-level; Theorem 3 and Proposition 2 state x ≥ x_crit; the Theorem 1 proof spells out ε = 1/C and
+  where n ≥ 2 is used; Proposition 5 explains that S_k is S-shaped in N; EGL results cited as "their Theorem 1 / Proposition 3"
+  to avoid clashing with ours; 0.75 → 0.745; scan described as n ∈ {2,4,6,8}.
+- Code: `core_numbers` now cleans raw edges itself (self-loops and duplicates used to inflate cores; E6 was unaffected because
+  `er_edges` already cleaned them); theorem numbering in code, tests and `summary.txt` matches the paper.

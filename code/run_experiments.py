@@ -2,10 +2,10 @@
 
   E1  Validation: Monte Carlo vs mean-field theory (sweeps over x and over phi).        [H1]
   E2  Bimodality: distribution of outcomes across replications near the threshold.     [H2]
-  E3  Collapse thresholds phi* vs supplier geography c, simulation vs theory.          [H3]
+  E3  Collapse thresholds phi* vs supplier geography c, simulation vs theory.          [Thm 3-4]
   E4  Realism: heavy-tailed supplier popularity, and hub regions hit by random vs
       targeted shocks.                                                                  [H4]
-  E5  Diversification trap and closed form: phi* vs cluster count c on finite networks. [Thm 2, Prop 4]
+  E5  Diversification trap and closed form: phi* vs cluster count c on finite networks. [Thm 3, Prop 5]
   E6  DGM (2006) reproduction: k-core sizes of damaged Erdos-Renyi graphs vs theory.     [DGM]
 
 Usage:  python3 run_experiments.py [--quick] [E1 ... E6]
@@ -219,7 +219,7 @@ def e4():
 
 
 def e5():
-    """Theorem 2 and Proposition 4 on finite networks: phi* for every cluster count c | n."""
+    """Theorem 3 and Proposition 5 on finite networks: phi* for every cluster count c | n."""
     configs = [(1, 4, 2), (1, 6, 3), (2, 6, 3), (3, 4, 2)]
     nrep = 10 if QUICK else 30
     jobs, theo = [], {}

@@ -21,8 +21,8 @@ def er_edges(N, z, rng):
 
 
 def core_numbers(N, edges, alive=None):
-    """Core number of every vertex of a simple graph; vertices with alive == False get 0."""
-    e = np.asarray(edges, dtype=np.int64).reshape(-1, 2)
+    """Core number of every vertex (edges are cleaned to a simple graph first); vertices with alive == False get 0."""
+    e = clean_edges(edges)                     # self-loops and duplicates would inflate degrees
     if alive is not None:
         alive = np.asarray(alive, dtype=bool)
         e = e[alive[e[:, 0]] & alive[e[:, 1]]]

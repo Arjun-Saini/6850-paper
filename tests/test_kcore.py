@@ -25,3 +25,8 @@ def test_er_kcore_matches_dgm():
     s = kcore_sizes(core_numbers(N, e, alive), range(3, 7))
     for k in range(3, 7):
         assert abs(s[k] - dgm_er_core_size(k, 0.90, 10)) < 0.01
+
+
+def test_raw_edges_with_duplicates_and_self_loops_do_not_inflate_cores():
+    e = np.array([[0, 1], [1, 2], [2, 0], [0, 3], [1, 0], [2, 2]])
+    assert core_numbers(5, e).tolist() == [2, 2, 2, 1, 0]

@@ -169,7 +169,7 @@ for s in e5["summary"]:
                "sim={phi_star_sim:.4f} [{ci_lo:.4f},{ci_hi:.4f}] misclass={misclass:.3f} n={n_runs}".format(**s))
 for (m, n, k) in [(2, 4, 1), (2, 4, 2), (3, 4, 2), (1, 4, 2)]:
     cf = phi_star_closed_form(0.9, m, n, k)
-    out.append(f"THM2 check m={m} n={n} k={k} x=0.9: closed form spread={cf['spread']:.4f} colocated={cf['colocated']:.4f}; "
+    out.append(f"THM3 check m={m} n={n} k={k} x=0.9: closed form spread={cf['spread']:.4f} colocated={cf['colocated']:.4f}; "
                f"numeric spread={phi_star(0.9, m, n, k, n):.4f} colocated={phi_star(0.9, m, n, k, 1):.4f}")
 scan_path = os.path.join(RES, "trap_scan.json")      # slow (~8 min): computed once, then cached
 if not os.path.exists(scan_path):

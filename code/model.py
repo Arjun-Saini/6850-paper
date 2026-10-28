@@ -116,7 +116,7 @@ def jump_at_threshold(m, n, k):
 
 # ------------------------------------------------------------------ geography theorems
 def phi_star_closed_form(x, m, n, k):
-    """Theorem 2: collapse thresholds of the two geographic extremes in closed form.
+    """Theorem 3 (paper numbering): collapse thresholds of the two geographic extremes in closed form.
 
     spread (c = n):     phi* = 1 - x_crit / x
     co-located (c = 1): phi* = 1 - (x_crit / x) ** (1 / m) = 1 - (1 - phi*_spread) ** (1 / m)
@@ -128,9 +128,9 @@ def phi_star_closed_form(x, m, n, k):
 
 
 def refinement_violations(x, m, n, k, tol=1e-4):
-    """Proposition 4 scan: pairs (c, c2) with c | c2 | n where splitting clusters LOWERS phi*.
+    """Proposition 5 (paper numbering) scan: pairs (c, c2) with c | c2 | n where splitting clusters LOWERS phi*.
 
-    Returns a list of (c, c2, phi*_c, phi*_c2) with phi*_c > phi*_c2 + tol (empty for k = 1 by Theorem 3)."""
+    Returns a list of (c, c2, phi*_c, phi*_c2) with phi*_c > phi*_c2 + tol (empty for k = 1 by Theorem 4)."""
     cs = [c for c in range(1, n + 1) if n % c == 0]
     ps = {c: phi_star(x, m, n, k, c) for c in cs}
     return [(c, c2, ps[c], ps[c2]) for c in cs for c2 in cs
@@ -182,10 +182,10 @@ if __name__ == "__main__":
     # check P3 closed form: phi* = 1 - x_crit / x when c = n
     for k in (1, 2):
         print(f"  P3 check k={k}: 1 - xcrit/x = {1 - x_crit(2, 4, k) / 0.9:.3f}")
-    # Theorem 2 check and Proposition 4 scan
+    # Theorem 3 check and Proposition 5 scan
     for k in (1, 2):
         cf = phi_star_closed_form(0.9, 2, 4, k)
-        print(f"  THM2 k={k}: closed form spread={cf['spread']:.4f} colocated={cf['colocated']:.4f}  "
+        print(f"  THM3 k={k}: closed form spread={cf['spread']:.4f} colocated={cf['colocated']:.4f}  "
               f"numeric {phi_star(0.9, 2, 4, k, 4):.4f} {phi_star(0.9, 2, 4, k, 1):.4f}")
     cases = viol = viol_k1 = 0
     for n in (2, 4, 6, 8):
