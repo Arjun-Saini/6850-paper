@@ -102,6 +102,13 @@ PHISTAR deep x=0.9 m=1 n=4 k=2: c=1:0.1946 c=2:0.1705 c=4:0.1946
 PHISTAR deep x=0.9 m=1 n=6 k=3: c=1:0.1878 c=2:0.1370 c=3:0.1548 c=6:0.1878
 PHISTAR deep x=0.95 m=2 n=6 k=3: c=1:0.0781 c=2:0.0699 c=3:0.0977 c=6:0.1502
 PHISTAR deep x=0.9 m=2 n=6 k=3: c=1:0.0529 c=2:0.0461 c=3:0.0665 c=6:0.1030
+TABLE1 m=1 n=4 k=1: x_crit=0.250 jump=0.000
+TABLE1 m=1 n=4 k=2: x_crit=0.725 jump=0.745
+TABLE1 m=2 n=4 k=1: x_crit=0.518 jump=0.638
+TABLE1 m=2 n=4 k=2: x_crit=0.831 jump=0.879
+TABLE1 m=2 n=8 k=2: x_crit=0.500 jump=0.781
+TABLE2 m=2 n=4 k=2 c=4 x=0.9: rho(phi=0.05)=0.913 phi*=0.0766
+E4b k=2 random h<=10: runs=140 collapsed(rho<0.1)=0.050
 E6 k=2: Qc_theory=0.8998 last_Q_below=0.890 size=0.001 first_Q_above=0.910 size=0.000
 E6 k=3: Qc_theory=0.6649 last_Q_below=0.655 size=0.142 first_Q_above=0.675 size=0.000
 E6 k=4: Qc_theory=0.4851 last_Q_below=0.475 size=0.287 first_Q_above=0.495 size=0.000

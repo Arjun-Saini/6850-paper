@@ -17,7 +17,7 @@ for _f in font_manager.findSystemFonts():
     if "texgyretermes" in _f.lower():
         font_manager.fontManager.addfont(_f)
 
-from model import finite_depth, phi_star, phi_star_closed_form, refinement_violations, rho
+from model import finite_depth, jump_at_threshold, phi_star, phi_star_closed_form, refinement_violations, rho, x_crit
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
@@ -185,6 +185,11 @@ out.append(f"TRAP scan: cases={cases} violations={viol} (k=1: {viol_k1})")
 for (x, m, n, k) in [(0.9, 1, 4, 2), (0.9, 1, 6, 3), (0.95, 2, 6, 3), (0.9, 2, 6, 3)]:
     cs = [c for c in range(1, n + 1) if n % c == 0]
     out.append(f"PHISTAR deep x={x} m={m} n={n} k={k}: " + " ".join(f"c={c}:{phi_star(x, m, n, k, c):.4f}" for c in cs))
+for (m, n, k) in [(1, 4, 1), (1, 4, 2), (2, 4, 1), (2, 4, 2), (2, 8, 2)]:
+    out.append(f"TABLE1 m={m} n={n} k={k}: x_crit={x_crit(m, n, k):.3f} jump={jump_at_threshold(m, n, k):.3f}")
+out.append(f"TABLE2 m=2 n=4 k=2 c=4 x=0.9: rho(phi=0.05)={rho(0.9, 2, 4, 2, 4, 0.05):.3f} phi*={phi_star(0.9, 2, 4, 2, 4):.4f}")
+rnd = [r for r in b if r["k"] == 2 and r["_mode"] == "random" and r["_h"] <= 10]
+out.append(f"E4b k=2 random h<=10: runs={len(rnd)} collapsed(rho<0.1)={np.mean([r['rho_sim'] < 0.1 for r in rnd]):.3f}")
 e6 = load("e6.json")
 from model import dgm_er_core_size
 e6_err = []
