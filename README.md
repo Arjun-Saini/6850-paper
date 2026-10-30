@@ -34,9 +34,14 @@ and commit the regenerated figures and `summary.txt` in the same commit.
 |----|-----------|---------------|
 | E1 | H1: simulations match eq. (2) | sweeps x (phi = 0) and phi (x = 0.9) for k in {1,2}, c in {1,2,4}; compares each run to theory at its realized share of hit regions |
 | E2 | H2: k >= 2 gives bimodal outcomes | 300 runs each of m = 1, k in {1,2} at the theoretical phi* |
-| E3 | H3: does phi* increase with c? (yes for k = 1, Theorem 3; not always for k >= 2, Proposition 4) | estimates phi* from 270 runs per (k, c) and bootstraps a 95% CI |
+| E3 | does phi* increase with c? (yes for k = 1, Claim 3; not always for k >= 2, Example 1) | phi* for m = 2, n = 4, k in {1,2}, c in {1,2,4}: bisects the tipping point of 40 networks per setting, reports the median and a bootstrap 95% CI |
 | E4 | H4: realism | (a) Pareto supplier popularity; (b) Pareto supply weights across regions, hit by targeted vs random shocks |
-| E5 | Theorem 2, Proposition 4 | phi* for every cluster count c of (m,n,k) in {(1,4,2),(1,6,3),(2,6,3),(3,4,2)}: the closed form and the diversification trap on finite networks |
+| E5 | Claim 2, Example 1 | same method as E3 for every cluster count c of (m,n,k) in {(1,4,2),(1,6,3),(2,6,3),(3,4,2)} |
 | E6 | DGM reproduction | k-core sizes of Erdős–Rényi graphs (N = 100,000, mean degree 10) after random vertex removal, against DGM's thresholds |
 
 Default network: depth 20 (21 layers), N = 20,000 firms per layer, G = 200 regions, m = 2, n = 4, x = 0.9.
+
+E3 and E5 instead use G = 2,000 regions with exactly 10 firms each (`balanced=True`) and hit an exact number h of regions.
+With a fixed seed the network is identical for every h and hit sets are nested, so collapse (reliability < 0.1) is monotone
+in h and bisection finds each network's exact tipping point h_crit. We report (h_crit - 0.5)/G (midway between the last
+surviving and first collapsing share) and widen the bootstrap CI by 0.5/G for that discretization.

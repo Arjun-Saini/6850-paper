@@ -131,41 +131,41 @@ Claim~\ref{thm:mono} does not extend to $k\ge2$. With $n=4$, $k=2$, $m=1$, $x=0.
 
 \begin{table}[t]
 \centering\small
-\caption{Tolerable shock $\phi^*$ ($n=4$, $x=0.9$). The simulated value is the realized shock that best separates collapsed runs (reliability below 0.1) from the rest, with a 95\% bootstrap interval from 270 runs.}
+\caption{Tolerable shock $\phi^*$ ($n=4$, $x=0.9$). Simulation: median over 40 networks (2{,}000 regions) of the share of regions hit midway between the last one each network survives and the first that brings its reliability below 0.1.}
 \label{tab:thresholds}
 \begin{tabular}{cccccc}
 \toprule
 $m$ & $k$ & Geography $c$ & Theory (infinite depth) & Theory (20 layers) & Simulation [95\% CI] \\
 \midrule
-2 & 1 & 4 (spread) & 0.425 & 0.444 & 0.4425 [0.4400, 0.4500] \\
-2 & 1 & 1 (co-located) & 0.242 & 0.254 & 0.2575 [0.2525, 0.2600] \\
-2 & 2 & 4 (spread) & 0.077 & 0.086 & 0.0875 [0.0875, 0.0875] \\
-2 & 2 & 2 (pairs) & 0.047 & 0.054 & 0.0525 [0.0525, 0.0525] \\
-2 & 2 & 1 (co-located) & 0.039 & 0.045 & 0.0425 [0.0425, 0.0425] \\
-1 & 2 & 4 (spread) & 0.195 & 0.216 & 0.2175 [0.2175, 0.2175] \\
-1 & 2 & 2 (pairs) & 0.171 & 0.195 & 0.1925 [0.1925, 0.1975] \\
-1 & 2 & 1 (co-located) & 0.195 & 0.217 & 0.2175 [0.2175, 0.2200] \\
+2 & 1 & 4 (spread) & 0.4249 & 0.4437 & 0.4438 [0.4430, 0.4442] \\
+2 & 1 & 1 (co-located) & 0.2417 & 0.2543 & 0.2543 [0.2538, 0.2550] \\
+2 & 2 & 4 (spread) & 0.0766 & 0.0864 & 0.0868 [0.0860, 0.0875] \\
+2 & 2 & 2 (pairs) & 0.0468 & 0.0542 & 0.0543 [0.0535, 0.0545] \\
+2 & 2 & 1 (co-located) & 0.0390 & 0.0446 & 0.0448 [0.0443, 0.0450] \\
+1 & 2 & 4 (spread) & 0.1946 & 0.2162 & 0.2163 [0.2158, 0.2170] \\
+1 & 2 & 2 (pairs) & 0.1705 & 0.1946 & 0.1948 [0.1940, 0.1950] \\
+1 & 2 & 1 (co-located) & 0.1946 & 0.2174 & 0.2168 [0.2163, 0.2175] \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{Spread versus co-located (Q2).} Table~\ref{tab:thresholds} estimates $\phi^*$ directly from the simulations, and every simulated value is within 0.004 of the 20-layer theory. With two inputs, co-location lowers the tolerable shock, as Claim~\ref{thm:closed} predicts. With one input and $k=2$, the extremes collapse together and the paired network collapses earlier than both, as in Example~\ref{prop:trap}; Figure~\ref{fig:hubs}(c) shows a similar reversal for $n=6$, $k=3$. The 20-layer networks tolerate somewhat larger shocks than the infinite-depth theory, since a cascade has fewer layers to build up.
+\paragraph{Spread versus co-located (Q2).} To measure tolerable shocks precisely, we use 2{,}000 regions of 10 firms each, hit an exact number of them, and find each network's tipping point by bisection (in a fixed network, hitting more regions can only hurt). In all 20 settings we simulated, the 95\% bootstrap interval (widened by half a region-step) contains the 20-layer theory, at most 0.0007 from the simulated median. With two inputs, co-location lowers the tolerable shock, as Claim~\ref{thm:closed} predicts. With one input and $k=2$, the extremes collapse together and the paired network collapses earlier than both, as in Example~\ref{prop:trap}; Figure~\ref{fig:hubs}(c) shows a similar reversal for $n=6$, $k=3$.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.88\linewidth]{figures/fig_bimodal_hubs.pdf}
+\includegraphics[width=0.84\linewidth]{figures/fig_bimodal_hubs.pdf}
 \caption{(a) Reliability in 300 runs at the theoretical threshold ($m=1$): $k=1$ fades, $k=2$ splits into collapse and survival. (b) Supply concentrated in hub regions ($m=2$, $n=4$, $c=4$, $x=0.9$): runs follow the theory once the shock is measured by the share of supplier clusters hit. (c) Tolerable shock against the number of supplier clusters ($x=0.9$): 20-layer theory (lines) and simulation with 95\% intervals.}
 \label{fig:hubs}
 \end{figure}
 
-\paragraph{Firms versus supply (Q3).} Making some suppliers far more popular than others (as in CNST's heavy-tailed data) changed average reliability by about 0.03 at most, which we expected, since in our model a popular supplier is no more likely to fail than any other. Concentrating supply in a few regions mattered much more. In one setup the largest region holds 11\% of all supply relationships but only 0.5\% of firms. Hitting that region alone collapses a $k=2$ network, while hitting up to 10 random regions (5\% of firms) collapses it in only 5\% of runs. The runs line up with the theory (average error 0.002) if, instead of the share of regions hit, we plug in the share of all supplier clusters whose region was hit (Figure~\ref{fig:hubs}b). So the right measure of a regional shock is the share of supply it removes.
+\paragraph{Firms versus supply (Q3).} Making some suppliers far more popular than others (as in CNST's heavy-tailed data) changed average reliability by about 0.03 at most, as expected, since in our model a popular supplier is no more likely to fail. Concentrating supply in a few regions mattered much more. In one setup the largest region holds 11\% of all supply relationships but only 0.5\% of firms. Hitting that region alone collapses a $k=2$ network, while hitting up to 10 random regions (5\% of firms) collapses it in only 5\% of runs. The runs line up with the theory (average error 0.002) if, instead of the share of regions hit, we plug in the share of all supplier clusters whose region was hit (Figure~\ref{fig:hubs}b).
 
 \section{Further Research and Next Steps}
-\paragraph{Do firms choose fragile setups? (final project)} In EGL, firms choose their relationship strength, and because they ignore how their reliability helps their customers, the equilibrium can sit right at the cliff. We want to let each firm also choose how many suppliers to keep and how many regions to place them in, paying a cost for each extra supplier and each extra region. In a symmetric equilibrium, each firm best-responds to the network's reliability, which is the solution of \eqref{eq:model} at the chosen setup. We will compute best responses on a grid ($n\le6$, all splits $c$, a few cost levels) and compare the equilibrium with the setup a planner would choose. Our hypothesis is that firms under-diversify, and that when $k=2$ some cost levels lead them to choose pairs, the worst split in Example~\ref{prop:trap}.
+\paragraph{Do firms choose fragile setups? (final project)} In EGL, firms choose their relationship strength, and because they ignore how their reliability helps their customers, the equilibrium can sit right at the cliff. We want to let each firm also choose how many suppliers to keep and how many regions to place them in, paying a cost for each extra supplier and each extra region. In a symmetric equilibrium, each firm best-responds to the network's reliability, which is the solution of \eqref{eq:model} at the chosen setup. We will compute best responses on a grid ($n\le6$, all splits $c$, a few costs) and compare with a planner's choice. Our hypothesis is that firms under-diversify, and that when $k=2$ some cost levels lead them to choose pairs, the worst split in Example~\ref{prop:trap}.
 
-\paragraph{Testing on data (final project).} Our model suggests a better exposure measure for a CNST-style study: the share of each firm's suppliers \emph{for each input} that sit in the disaster area, rather than the distance to it. The model predicts a sharp drop in outcomes once fewer than $k$ suppliers survive, and more firm exits among the most exposed. CNST's data is proprietary, so we plan to start with public inter-country input--output tables (such as the OECD's), treating countries as regions. For a past regional disaster, such as the 2011 Thailand floods, we would compute each industry's share of input purchases from the hit region and check whether output losses rise sharply above some share rather than in proportion to it.
+\paragraph{Testing on data (final project).} Our model suggests a better exposure measure for a CNST-style study: the share of each firm's suppliers \emph{for each input} that sit in the disaster area, rather than the distance to it. The model predicts a sharp drop in outcomes once fewer than $k$ suppliers survive, and more firm exits among the most exposed. CNST's data is proprietary, so we plan to start with public inter-country input--output tables (such as the OECD's), treating countries as regions. For a past disaster such as the 2011 Thailand floods, we would check whether industries' output losses jump once their input share from the hit region passes some level, rather than growing in proportion.
 
-\paragraph{Smaller questions.} We would like a simple condition on $(n,k,m,x)$ that predicts when pairs are worst, results for networks with cycles, and a method for choosing which firms to protect under a budget. The last is a reverse influence-maximization problem \cite{kempe2003} whose AND structure likely breaks submodularity.
+\paragraph{Smaller questions.} We would also like a rule in $(n,k,m,x)$ for when pairs are worst, results with cycles, and a way to protect firms on a budget, a reverse influence-maximization problem \cite{kempe2003} whose AND structure likely breaks submodularity.
 
 \newpage
 \renewcommand{\refname}{References}

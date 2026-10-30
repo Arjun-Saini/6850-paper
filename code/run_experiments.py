@@ -2,10 +2,11 @@
 
   E1  Validation: Monte Carlo vs mean-field theory (sweeps over x and over phi).        [H1]
   E2  Bimodality: distribution of outcomes across replications near the threshold.     [H2]
-  E3  Collapse thresholds phi* vs supplier geography c, simulation vs theory.          [Thm 3-4]
+  E3  Collapse thresholds phi* vs supplier geography c, simulation vs theory.          [Claims 2-3]
   E4  Realism: heavy-tailed supplier popularity, and hub regions hit by random vs
       targeted shocks.                                                                  [H4]
-  E5  Diversification trap and closed form: phi* vs cluster count c on finite networks. [Thm 3, Prop 5]
+  E5  Pairs reversal and closed form: phi* vs cluster count c on finite networks.      [Claim 2, Example 1]
+      E3 and E5 bisect each network's tipping point (number of hit regions) on G = 2000 regions.
   E6  DGM (2006) reproduction: k-core sizes of damaged Erdos-Renyi graphs vs theory.     [DGM]
 
 Usage:  python3 run_experiments.py [--quick] [E1 ... E6]
@@ -29,6 +30,9 @@ REPS = 6 if QUICK else 20
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results")
 os.makedirs(OUT, exist_ok=True)
 BASE = dict(depth=20, N=20000, G=200)
+# threshold experiments (E3, E5): 10x more regions so the shock moves in steps of 0.0005
+FINE = dict(depth=20, N=20000, G=2000, balanced=True)
+NETS = 10 if QUICK else 40
 
 
 def run_one(job):
@@ -102,26 +106,6 @@ def e2():
     return res
 
 
-def threshold_from_runs(phis, collapsed):
-    """Split point on realized phi minimizing misclassification of collapsed / survived.
-
-    Realized shocks have many ties (multiples of 1/G), so we only split between distinct values;
-    splitting inside a tie would make the answer depend on how the sort orders equal keys."""
-    o = np.argsort(phis, kind="stable")
-    p, y = np.asarray(phis)[o], np.asarray(collapsed)[o].astype(int)
-    best, best_err = None, 1e9
-    for i in range(len(p) + 1):
-        if 0 < i < len(p) and p[i - 1] == p[i]:
-            continue
-        err = y[:i].sum() + (1 - y[i:]).sum()   # left should survive, right should collapse
-        if err < best_err:
-            best_err = err
-            lo = p[i - 1] if i > 0 else p[0]
-            hi = p[i] if i < len(p) else p[-1]
-            best = 0.5 * (lo + hi)
-    return best, best_err / len(p)
-
-
 def depth20_threshold(x, m, n, k, c, depth=20):
     """Largest phi with finite-depth theory reliability (1 - phi) F^D(1) >= 0.1 (E3's collapse criterion)."""
     lo, hi = 0.0, 1.0
@@ -134,52 +118,83 @@ def depth20_threshold(x, m, n, k, c, depth=20):
     return lo
 
 
-def summarize_thresholds(rr, rng_seed=0):
-    """E3-style threshold estimate from runs: split point on realized phi plus a 500-draw bootstrap CI."""
-    ph = np.array([r["phi_hat"] for r in rr])
-    col = np.array([r["rho_sim"] < 0.1 for r in rr])
-    est, err = threshold_from_runs(ph, col)
-    rng = np.random.default_rng(rng_seed)
-    boots = []
-    for _ in range(500):
-        idx = rng.integers(len(ph), size=len(ph))
-        boots.append(threshold_from_runs(ph[idx], col[idx])[0])
-    return est, float(np.percentile(boots, 2.5)), float(np.percentile(boots, 97.5)), err
+def nested_hit(seed, h, G):
+    """The first h regions of a seed-specific random order: hit sets grow with h."""
+    hit = np.zeros(G, dtype=bool)
+    hit[np.random.default_rng([seed, 1]).permutation(G)[:h]] = True
+    return hit
+
+
+def collapses(job, h):
+    """Does this job's network end with reliability below 0.1 when exactly h regions are hit?"""
+    kw = {key: v for key, v in job.items() if not key.startswith("_")}
+    return simulate(**kw, phi=h / kw["G"], hit=nested_hit(job["seed"], h, kw["G"])) < 0.1
+
+
+def critical_hits(job):
+    """Worker: the smallest number of hit regions that collapses one network, by bisection.
+
+    With a fixed seed the network (supplier picks, relationship coin flips) is the same for every h,
+    and hit sets are nested, so collapse is monotone in h and bisection finds the exact tipping point."""
+    G, guess = job["G"], job["_guess"]
+    sims = 0
+
+    def test(h):
+        nonlocal sims
+        sims += 1
+        return collapses(job, h)
+
+    lo, hi = max(0, int(0.7 * guess)), min(G, int(np.ceil(1.3 * guess)) + 1)
+    while lo > 0 and test(lo):                 # widen until lo survives ...
+        lo, hi = lo // 2, lo
+    while hi < G and not test(hi):             # ... and hi collapses (all G regions hit always does)
+        lo, hi = hi, min(G, 2 * hi)
+    if lo == 0 and test(0):
+        hi = 0
+    while hi - lo > 1:
+        mid = (lo + hi) // 2
+        if test(mid):
+            hi = mid
+        else:
+            lo = mid
+    out = {key: v for key, v in job.items() if key != "balanced"}
+    out.update(h_crit=hi, n_sims=sims)
+    return out
+
+
+def threshold_summary(nets, G):
+    """Median tipping point over networks (= the shock at which half of them collapse), with a
+    bootstrap 95% CI over networks widened by half a grid step (each tipping point is known to +-0.5/G)."""
+    v = np.array([(r["h_crit"] - 0.5) / G for r in nets])
+    rng = np.random.default_rng(0)
+    boots = np.median(v[rng.integers(len(v), size=(2000, len(v)))], axis=1)
+    half = 0.5 / G
+    return float(np.median(v)), float(np.percentile(boots, 2.5) - half), float(np.percentile(boots, 97.5) + half)
+
+
+def threshold_experiment(name, configs, seed0):
+    """phi* on finite networks for each (m, n, k, c): bisect the tipping point of NETS networks each."""
+    jobs, theo = [], {}
+    for (m, n, k, c) in configs:
+        d20 = depth20_threshold(0.9, m, n, k, c)
+        theo[(m, n, k, c)] = (phi_star(0.9, m, n, k, c), d20)
+        for s in range(NETS):
+            jobs.append(dict(_exp=name, _guess=d20 * FINE["G"], m=m, n=n, k=k, x=0.9, c=c,
+                             seed=seed0 + s, **FINE))
+    with Pool(os.cpu_count()) as pool:
+        nets = pool.map(critical_hits, jobs, chunksize=1)
+    summary = []
+    for (m, n, k, c), (deep, d20) in theo.items():
+        rr = [r for r in nets if (r["m"], r["n"], r["k"], r["c"]) == (m, n, k, c)]
+        est, lo, hi = threshold_summary(rr, FINE["G"])
+        summary.append(dict(m=m, n=n, k=k, c=c, phi_star_theory=deep, phi_star_depth20=d20, phi_star_sim=est,
+                            ci_lo=lo, ci_hi=hi, n_networks=len(rr), n_sims=sum(r["n_sims"] for r in rr)))
+    save(f"{name.lower()}.json", dict(summary=summary, networks=nets))
+    return summary
 
 
 def e3():
-    jobs = []
-    nrep = 10 if QUICK else 30
-    theo = {}
-    for k in (1, 2):
-        for c in (1, 2, 4):
-            ps = phi_star(0.9, 2, 4, k, c)
-            theo[f"{k},{c}"] = ps
-            for phi in np.linspace(0.6 * ps, 1.4 * ps, 9):
-                for s in range(nrep):
-                    jobs.append(dict(_exp="E3", m=2, n=4, k=k, x=0.9, phi=float(phi), c=c,
-                                     seed=9000 + s, **BASE))
-    res = pmap(jobs)
-    summary = []
-    for k in (1, 2):
-        for c in (1, 2, 4):
-            rr = [r for r in res if r["k"] == k and r["c"] == c]
-            ph = np.array([r["phi_hat"] for r in rr])
-            col = np.array([r["rho_sim"] < 0.1 for r in rr])
-            est, err = threshold_from_runs(ph, col)
-            # bootstrap CI over replications
-            rng = np.random.default_rng(0)
-            boots = []
-            for _ in range(500):
-                idx = rng.integers(len(ph), size=len(ph))
-                boots.append(threshold_from_runs(ph[idx], col[idx])[0])
-            # finite-depth theory threshold with the same "rho < 0.1" collapse criterion
-            lo = depth20_threshold(0.9, 2, 4, k, c)
-            summary.append(dict(k=k, c=c, phi_star_theory=theo[f"{k},{c}"], phi_star_depth20=lo,
-                                phi_star_sim=est, ci_lo=float(np.percentile(boots, 2.5)),
-                                ci_hi=float(np.percentile(boots, 97.5)), misclass=err, n_runs=len(rr)))
-    save("e3.json", dict(summary=summary, runs=res))
-    return summary
+    return threshold_experiment("E3", [(2, 4, k, c) for k in (1, 2) for c in (1, 2, 4)], 9000)
 
 
 def e4():
@@ -226,25 +241,8 @@ def e4():
 def e5():
     """Theorem 2 and Proposition 4 on finite networks: phi* for every cluster count c | n."""
     configs = [(1, 4, 2), (1, 6, 3), (2, 6, 3), (3, 4, 2)]
-    nrep = 10 if QUICK else 30
-    jobs, theo = [], {}
-    for (m, n, k) in configs:
-        for c in [c for c in range(1, n + 1) if n % c == 0]:
-            d20 = depth20_threshold(0.9, m, n, k, c)
-            theo[(m, n, k, c)] = (phi_star(0.9, m, n, k, c), d20)
-            for phi in np.linspace(0.6, 1.4, 9) * d20:
-                for s in range(nrep):
-                    jobs.append(dict(_exp="E5", m=m, n=n, k=k, x=0.9, phi=float(phi), c=c,
-                                     seed=60000 + s, **BASE))
-    res = pmap(jobs)
-    summary = []
-    for (m, n, k, c), (deep, d20) in theo.items():
-        rr = [r for r in res if (r["m"], r["n"], r["k"], r["c"]) == (m, n, k, c)]
-        est, lo, hi, err = summarize_thresholds(rr)
-        summary.append(dict(m=m, n=n, k=k, c=c, phi_star_theory=deep, phi_star_depth20=d20, phi_star_sim=est,
-                            ci_lo=lo, ci_hi=hi, misclass=err, n_runs=len(rr)))
-    save("e5.json", dict(summary=summary, runs=res))
-    return summary
+    return threshold_experiment("E5", [(m, n, k, c) for (m, n, k) in configs
+                                       for c in range(1, n + 1) if n % c == 0], 60000)
 
 
 def e6():

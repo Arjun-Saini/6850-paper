@@ -148,8 +148,8 @@ out.append(f"E4b: MAE vs depth-20 theory using supply-weighted shock = {e4b_err.
 # ---------------------------------------------------------------- E3 and E4a summaries
 e3 = load("e3.json")
 for s in e3["summary"]:
-    out.append("E3 k={k} c={c}: theory_inf={phi_star_theory:.3f} theory_D20={phi_star_depth20:.3f} "
-               "sim={phi_star_sim:.3f} [{ci_lo:.3f},{ci_hi:.3f}] misclass={misclass:.3f} n={n_runs}".format(**s))
+    out.append("E3 k={k} c={c}: theory_inf={phi_star_theory:.4f} theory_D20={phi_star_depth20:.4f} "
+               "sim={phi_star_sim:.4f} [{ci_lo:.4f},{ci_hi:.4f}] networks={n_networks} sims={n_sims}".format(**s))
 a = [r for r in e4["runs"] if r["_exp"] == "E4a"]
 gm = group_mean(a, lambda r: (str(r["alpha"]), r["k"], r["phi"]), lambda r: r["rho_sim"])
 for key in sorted(gm):
@@ -162,7 +162,7 @@ for k in (1, 2):
 # ---------------------------------------------------------------- E5, E6, theorem checks
 for s in e5["summary"]:
     out.append("E5 m={m} n={n} k={k} c={c}: theory_inf={phi_star_theory:.4f} theory_D20={phi_star_depth20:.4f} "
-               "sim={phi_star_sim:.4f} [{ci_lo:.4f},{ci_hi:.4f}] misclass={misclass:.3f} n={n_runs}".format(**s))
+               "sim={phi_star_sim:.4f} [{ci_lo:.4f},{ci_hi:.4f}] networks={n_networks} sims={n_sims}".format(**s))
 for (m, n, k) in [(2, 4, 1), (2, 4, 2), (3, 4, 2), (1, 4, 2)]:
     cf = phi_star_closed_form(0.9, m, n, k)
     out.append(f"THM2 check m={m} n={n} k={k} x=0.9: closed form spread={cf['spread']:.4f} colocated={cf['colocated']:.4f}; "
