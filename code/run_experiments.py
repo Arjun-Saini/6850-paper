@@ -103,11 +103,16 @@ def e2():
 
 
 def threshold_from_runs(phis, collapsed):
-    """Split point on realized phi minimizing misclassification of collapsed / survived."""
-    o = np.argsort(phis)
+    """Split point on realized phi minimizing misclassification of collapsed / survived.
+
+    Realized shocks have many ties (multiples of 1/G), so we only split between distinct values;
+    splitting inside a tie would make the answer depend on how the sort orders equal keys."""
+    o = np.argsort(phis, kind="stable")
     p, y = np.asarray(phis)[o], np.asarray(collapsed)[o].astype(int)
     best, best_err = None, 1e9
     for i in range(len(p) + 1):
+        if 0 < i < len(p) and p[i - 1] == p[i]:
+            continue
         err = y[:i].sum() + (1 - y[i:]).sum()   # left should survive, right should collapse
         if err < best_err:
             best_err = err
@@ -219,7 +224,7 @@ def e4():
 
 
 def e5():
-    """Theorem 3 and Proposition 5 on finite networks: phi* for every cluster count c | n."""
+    """Theorem 2 and Proposition 4 on finite networks: phi* for every cluster count c | n."""
     configs = [(1, 4, 2), (1, 6, 3), (2, 6, 3), (3, 4, 2)]
     nrep = 10 if QUICK else 30
     jobs, theo = [], {}

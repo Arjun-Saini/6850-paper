@@ -11,12 +11,6 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib import font_manager
-
-for _f in font_manager.findSystemFonts():
-    if "texgyretermes" in _f.lower():
-        font_manager.fontManager.addfont(_f)
-
 from model import finite_depth, jump_at_threshold, phi_star, phi_star_closed_form, refinement_violations, rho, x_crit
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -27,7 +21,7 @@ os.makedirs(FIG, exist_ok=True)
 BLUE, ORANGE, AQUA, YELLOW = "#2a78d6", "#eb6834", "#1baf7a", "#eda100"
 INK, MUTED, GRID = "#1f1f1d", "#6b6a63", "#e1e0d9"
 plt.rcParams.update({
-    "font.family": "serif", "font.serif": ["TeX Gyre Termes", "DejaVu Serif"],
+    "font.family": "serif", "font.serif": ["STIXGeneral"],  # bundled with matplotlib, so every machine renders alike
     "mathtext.fontset": "stix", "pdf.fonttype": 42, "font.size": 8, "axes.titlesize": 8.5, "axes.labelsize": 8,
     "legend.fontsize": 6.8, "xtick.labelsize": 7, "ytick.labelsize": 7,
     "axes.edgecolor": "#c3c2b7", "axes.labelcolor": INK, "xtick.color": MUTED,
@@ -35,6 +29,7 @@ plt.rcParams.update({
     "axes.spines.top": False, "axes.spines.right": False, "lines.linewidth": 1.4,
     "legend.frameon": False,
 })
+PDF_META = {"CreationDate": None}           # no timestamp, so reruns give byte-identical PDFs
 load = lambda f: json.load(open(os.path.join(RES, f)))
 out = []
 
@@ -74,8 +69,8 @@ for j, (k, pmax) in enumerate([(1, 0.5), (2, 0.12)], start=1):
     ax[j].set(xlabel=r"share of regions hit $\phi$", ylim=(-0.03, 1.03), xlim=(0, pmax),
               title=f"({'bc'[j-1]}) Regional shock, $k={k}$")
     ax[j].legend(loc="lower left", handletextpad=0.2, borderaxespad=0.2)
-fig.tight_layout(pad=0.3, w_pad=0.8)
-fig.savefig(os.path.join(FIG, "fig_validation.pdf"))
+fig.tight_layout(pad=0.6, w_pad=0.8)
+fig.savefig(os.path.join(FIG, "fig_validation.pdf"), metadata=PDF_META)
 
 err_fin = np.array([abs(r["rho_sim"] - r["theory_fin"]) for r in e1])
 err_inf = np.array([abs(r["rho_sim"] - r["theory_inf"]) for r in e1])
@@ -98,6 +93,7 @@ for k in (1, 2):
     out.append(f"E2 k={k}: phi*={ps:.4f} runs={len(v)} mean={v.mean():.3f} "
                f"frac<0.1={np.mean(v < 0.1):.3f} frac>0.4={np.mean(v > 0.4):.3f} "
                f"median of survivors(>0.1)={np.median(v[v > 0.1]) if np.any(v > 0.1) else float('nan'):.3f} "
+               f"median of runs>0.4={np.median(v[v > 0.4]) if np.any(v > 0.4) else float('nan'):.3f} "
                f"max={v.max():.3f}")
 ax[0].hist(vals, bins=bins, color=[BLUE, ORANGE], label=labs, rwidth=0.9)
 ax[0].set(xlabel=r"reliability $\rho$ of one replication", ylabel="replications",
@@ -141,11 +137,11 @@ for (m, n, k), col, mk in [((1, 4, 2), BLUE, "o"), ((1, 6, 3), ORANGE, "s"), ((2
                    fmt=mk, color=col, ms=3.2, mec="white", mew=0.4, elinewidth=0.8, capsize=1.5,
                    label=f"$m={m},n={n},k={k}$")
 ax[2].set_xticks(range(len(cs_all)), [str(c) for c in cs_all])
-ax[2].set(xlabel="supplier clusters $c$ (1 = co-located)", ylabel=r"collapse threshold $\phi^*$",
-          title="(c) The diversification trap", ylim=(0, 0.31))
+ax[2].set(xlabel="supplier clusters $c$ (1 = co-located)", ylabel=r"tolerable shock $\phi^*$",
+          title="(c) Shock tolerance by clusters", ylim=(0, 0.31))
 ax[2].legend(loc="upper center", ncol=2, handletextpad=0.1, columnspacing=0.6, borderaxespad=0.1, fontsize=5.6)
-fig.tight_layout(pad=0.3, w_pad=0.9)
-fig.savefig(os.path.join(FIG, "fig_bimodal_hubs.pdf"))
+fig.tight_layout(pad=0.6, w_pad=0.9)
+fig.savefig(os.path.join(FIG, "fig_bimodal_hubs.pdf"), metadata=PDF_META)
 e4b_err = np.array([abs(r["rho_sim"] - r["theory_fin"]) for r in b])
 out.append(f"E4b: MAE vs depth-20 theory using supply-weighted shock = {e4b_err.mean():.4f}")
 
@@ -169,7 +165,7 @@ for s in e5["summary"]:
                "sim={phi_star_sim:.4f} [{ci_lo:.4f},{ci_hi:.4f}] misclass={misclass:.3f} n={n_runs}".format(**s))
 for (m, n, k) in [(2, 4, 1), (2, 4, 2), (3, 4, 2), (1, 4, 2)]:
     cf = phi_star_closed_form(0.9, m, n, k)
-    out.append(f"THM3 check m={m} n={n} k={k} x=0.9: closed form spread={cf['spread']:.4f} colocated={cf['colocated']:.4f}; "
+    out.append(f"THM2 check m={m} n={n} k={k} x=0.9: closed form spread={cf['spread']:.4f} colocated={cf['colocated']:.4f}; "
                f"numeric spread={phi_star(0.9, m, n, k, n):.4f} colocated={phi_star(0.9, m, n, k, 1):.4f}")
 scan_path = os.path.join(RES, "trap_scan.json")      # slow (~8 min): computed once, then cached
 if not os.path.exists(scan_path):

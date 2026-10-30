@@ -1,7 +1,7 @@
 E1: runs=3360  MAE vs depth-20 theory at realized phi = 0.0025 (95th pct 0.0057, max 0.408); MAE vs infinite-depth theory = 0.0200
 E1: runs away from threshold (fin~inf within .01): n=3192, MAE=0.0010
-E2 k=1: phi*=0.7222 runs=300 mean=0.042 frac<0.1=0.903 frac>0.4=0.000 median of survivors(>0.1)=0.146 max=0.205
-E2 k=2: phi*=0.1946 runs=300 mean=0.495 frac<0.1=0.203 frac>0.4=0.713 median of survivors(>0.1)=0.666 max=0.821
+E2 k=1: phi*=0.7222 runs=300 mean=0.042 frac<0.1=0.903 frac>0.4=0.000 median of survivors(>0.1)=0.146 median of runs>0.4=nan max=0.205
+E2 k=2: phi*=0.1946 runs=300 mean=0.495 frac<0.1=0.203 frac>0.4=0.713 median of survivors(>0.1)=0.666 median of runs>0.4=0.676 max=0.821
 E4b k=1 random   h= 1 firms_hit=0.5% supply_share=0.003 rho_sim=0.995+-0.001
 E4b k=1 random   h= 2 firms_hit=1.0% supply_share=0.014 rho_sim=0.989+-0.001
 E4b k=1 random   h= 3 firms_hit=1.5% supply_share=0.018 rho_sim=0.984+-0.001
@@ -39,12 +39,12 @@ E4b k=2 targeted h=10 firms_hit=5.0% supply_share=0.371 rho_sim=0.000+-0.000
 E4b k=2 targeted h=14 firms_hit=7.0% supply_share=0.414 rho_sim=0.000+-0.000
 E4b k=2 targeted h=20 firms_hit=10.0% supply_share=0.469 rho_sim=0.000+-0.000
 E4b: MAE vs depth-20 theory using supply-weighted shock = 0.0022
-E3 k=1 c=1: theory_inf=0.242 theory_D20=0.254 sim=0.255 [0.253,0.258] misclass=0.004 n=270
+E3 k=1 c=1: theory_inf=0.242 theory_D20=0.254 sim=0.258 [0.253,0.260] misclass=0.007 n=270
 E3 k=1 c=2: theory_inf=0.342 theory_D20=0.359 sim=0.357 [0.357,0.360] misclass=0.000 n=270
-E3 k=1 c=4: theory_inf=0.425 theory_D20=0.444 sim=0.445 [0.440,0.450] misclass=0.000 n=270
-E3 k=2 c=1: theory_inf=0.039 theory_D20=0.045 sim=0.042 [0.042,0.045] misclass=0.037 n=270
-E3 k=2 c=2: theory_inf=0.047 theory_D20=0.054 sim=0.053 [0.053,0.055] misclass=0.011 n=270
-E3 k=2 c=4: theory_inf=0.077 theory_D20=0.086 sim=0.085 [0.085,0.087] misclass=0.000 n=270
+E3 k=1 c=4: theory_inf=0.425 theory_D20=0.444 sim=0.443 [0.440,0.450] misclass=0.004 n=270
+E3 k=2 c=1: theory_inf=0.039 theory_D20=0.045 sim=0.042 [0.042,0.042] misclass=0.037 n=270
+E3 k=2 c=2: theory_inf=0.047 theory_D20=0.054 sim=0.053 [0.053,0.053] misclass=0.011 n=270
+E3 k=2 c=4: theory_inf=0.077 theory_D20=0.086 sim=0.087 [0.087,0.087] misclass=0.004 n=270
 E4a alpha=1.25  k=1 phi=0.00: rho=1.000+-0.000
 E4a alpha=1.25  k=1 phi=0.10: rho=0.890+-0.019
 E4a alpha=1.25  k=1 phi=0.20: rho=0.784+-0.029
@@ -80,23 +80,23 @@ E4a k=1 alpha=1.25: max |mean diff vs uniform| = 0.001
 E4a k=2 alpha=2.0: max |mean diff vs uniform| = 0.029
 E4a k=2 alpha=1.25: max |mean diff vs uniform| = 0.032
 E5 m=1 n=4 k=2 c=1: theory_inf=0.1946 theory_D20=0.2174 sim=0.2175 [0.2175,0.2200] misclass=0.004 n=270
-E5 m=1 n=4 k=2 c=2: theory_inf=0.1705 theory_D20=0.1946 sim=0.1950 [0.1925,0.1975] misclass=0.004 n=270
+E5 m=1 n=4 k=2 c=2: theory_inf=0.1705 theory_D20=0.1946 sim=0.1925 [0.1925,0.1975] misclass=0.011 n=270
 E5 m=1 n=4 k=2 c=4: theory_inf=0.1946 theory_D20=0.2162 sim=0.2175 [0.2175,0.2175] misclass=0.000 n=270
 E5 m=1 n=6 k=3 c=1: theory_inf=0.1878 theory_D20=0.2014 sim=0.2025 [0.2025,0.2025] misclass=0.000 n=270
 E5 m=1 n=6 k=3 c=2: theory_inf=0.1370 theory_D20=0.1504 sim=0.1525 [0.1475,0.1525] misclass=0.011 n=270
 E5 m=1 n=6 k=3 c=3: theory_inf=0.1548 theory_D20=0.1670 sim=0.1675 [0.1675,0.1675] misclass=0.000 n=270
-E5 m=1 n=6 k=3 c=6: theory_inf=0.1878 theory_D20=0.2005 sim=0.2000 [0.1975,0.2025] misclass=0.004 n=270
+E5 m=1 n=6 k=3 c=6: theory_inf=0.1878 theory_D20=0.2005 sim=0.2025 [0.1975,0.2025] misclass=0.007 n=270
 E5 m=2 n=6 k=3 c=1: theory_inf=0.0529 theory_D20=0.0569 sim=0.0575 [0.0575,0.0575] misclass=0.000 n=270
-E5 m=2 n=6 k=3 c=2: theory_inf=0.0461 theory_D20=0.0505 sim=0.0525 [0.0500,0.0525] misclass=0.004 n=270
+E5 m=2 n=6 k=3 c=2: theory_inf=0.0461 theory_D20=0.0505 sim=0.0525 [0.0525,0.0525] misclass=0.004 n=270
 E5 m=2 n=6 k=3 c=3: theory_inf=0.0665 theory_D20=0.0719 sim=0.0725 [0.0725,0.0725] misclass=0.000 n=270
-E5 m=2 n=6 k=3 c=6: theory_inf=0.1030 theory_D20=0.1100 sim=0.1100 [0.1075,0.1125] misclass=0.015 n=270
+E5 m=2 n=6 k=3 c=6: theory_inf=0.1030 theory_D20=0.1100 sim=0.1125 [0.1075,0.1125] misclass=0.019 n=270
 E5 m=3 n=4 k=2 c=1: theory_inf=0.0117 theory_D20=0.0142 sim=0.0125 [0.0125,0.0125] misclass=0.000 n=270
 E5 m=3 n=4 k=2 c=2: theory_inf=0.0170 theory_D20=0.0209 sim=0.0225 [0.0225,0.0225] misclass=0.000 n=270
 E5 m=3 n=4 k=2 c=4: theory_inf=0.0347 theory_D20=0.0415 sim=0.0425 [0.0425,0.0425] misclass=0.000 n=270
-THM3 check m=2 n=4 k=1 x=0.9: closed form spread=0.4249 colocated=0.2417; numeric spread=0.4249 colocated=0.2417
-THM3 check m=2 n=4 k=2 x=0.9: closed form spread=0.0766 colocated=0.0390; numeric spread=0.0766 colocated=0.0390
-THM3 check m=3 n=4 k=2 x=0.9: closed form spread=0.0347 colocated=0.0117; numeric spread=0.0347 colocated=0.0117
-THM3 check m=1 n=4 k=2 x=0.9: closed form spread=0.1946 colocated=0.1946; numeric spread=0.1946 colocated=0.1946
+THM2 check m=2 n=4 k=1 x=0.9: closed form spread=0.4249 colocated=0.2417; numeric spread=0.4249 colocated=0.2417
+THM2 check m=2 n=4 k=2 x=0.9: closed form spread=0.0766 colocated=0.0390; numeric spread=0.0766 colocated=0.0390
+THM2 check m=3 n=4 k=2 x=0.9: closed form spread=0.0347 colocated=0.0117; numeric spread=0.0347 colocated=0.0117
+THM2 check m=1 n=4 k=2 x=0.9: closed form spread=0.1946 colocated=0.1946; numeric spread=0.1946 colocated=0.1946
 TRAP scan: cases=360 violations=72 (k=1: 0)
 PHISTAR deep x=0.9 m=1 n=4 k=2: c=1:0.1946 c=2:0.1705 c=4:0.1946
 PHISTAR deep x=0.9 m=1 n=6 k=3: c=1:0.1878 c=2:0.1370 c=3:0.1548 c=6:0.1878

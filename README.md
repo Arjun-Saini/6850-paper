@@ -24,14 +24,19 @@ cd .. && pdflatex paper.tex && pdflatex paper.tex
 ```
 All runs are seeded, so results reproduce exactly on the same NumPy version (2.x was used).
 
+The figures in `figures/` are always the output of `code/make_figures.py` on the committed `results/*.json`; never edit them by hand.
+The script uses matplotlib's bundled STIXGeneral font and writes PDFs without a timestamp, so rerunning it on the same
+inputs gives byte-identical figures on any machine. If you change the figure code or any results, rerun `make_figures.py`
+and commit the regenerated figures and `summary.txt` in the same commit.
+
 ## Experiments
 | ID | Hypothesis | What it does |
 |----|-----------|---------------|
 | E1 | H1: simulations match eq. (2) | sweeps x (phi = 0) and phi (x = 0.9) for k in {1,2}, c in {1,2,4}; compares each run to theory at its realized share of hit regions |
 | E2 | H2: k >= 2 gives bimodal outcomes | 300 runs each of m = 1, k in {1,2} at the theoretical phi* |
-| E3 | H3: does phi* increase with c? (yes for k = 1, Theorem 4; not always for k >= 2, Proposition 5) | estimates phi* from 270 runs per (k, c) and bootstraps a 95% CI |
+| E3 | H3: does phi* increase with c? (yes for k = 1, Theorem 3; not always for k >= 2, Proposition 4) | estimates phi* from 270 runs per (k, c) and bootstraps a 95% CI |
 | E4 | H4: realism | (a) Pareto supplier popularity; (b) Pareto supply weights across regions, hit by targeted vs random shocks |
-| E5 | Theorem 3, Proposition 5 | phi* for every cluster count c of (m,n,k) in {(1,4,2),(1,6,3),(2,6,3),(3,4,2)}: the closed form and the diversification trap on finite networks |
+| E5 | Theorem 2, Proposition 4 | phi* for every cluster count c of (m,n,k) in {(1,4,2),(1,6,3),(2,6,3),(3,4,2)}: the closed form and the diversification trap on finite networks |
 | E6 | DGM reproduction | k-core sizes of Erdős–Rényi graphs (N = 100,000, mean degree 10) after random vertex removal, against DGM's thresholds |
 
 Default network: depth 20 (21 layers), N = 20,000 firms per layer, G = 200 regions, m = 2, n = 4, x = 0.9.
