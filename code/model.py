@@ -114,6 +114,60 @@ def jump_at_threshold(m, n, k):
     return largest_fixed_point(xc + 1e-5, m, n, k)
 
 
+# ------------------------------------------------------------------ geography theorems
+def phi_star_closed_form(x, m, n, k):
+    """Theorem 2 (paper numbering): collapse thresholds of the two geographic extremes in closed form.
+
+    spread (c = n):     phi* = 1 - x_crit / x
+    co-located (c = 1): phi* = 1 - (x_crit / x) ** (1 / m) = 1 - (1 - phi*_spread) ** (1 / m)
+    Both are 0 when the network is already dead without a shock (x < x_crit)."""
+    xc = x_crit(m, n, k)
+    if not np.isfinite(xc) or x < xc:
+        return {"spread": 0.0, "colocated": 0.0}
+    return {"spread": max(0.0, 1.0 - xc / x), "colocated": max(0.0, 1.0 - (xc / x) ** (1.0 / m))}
+
+
+def refinement_violations(x, m, n, k, tol=1e-4):
+    """Proposition 4 (paper numbering) scan: pairs (c, c2) with c | c2 | n where splitting clusters LOWERS phi*.
+
+    Returns a list of (c, c2, phi*_c, phi*_c2) with phi*_c > phi*_c2 + tol (empty for k = 1 by Theorem 3)."""
+    cs = [c for c in range(1, n + 1) if n % c == 0]
+    ps = {c: phi_star(x, m, n, k, c) for c in cs}
+    return [(c, c2, ps[c], ps[c2]) for c in cs for c2 in cs
+            if c < c2 and c2 % c == 0 and ps[c] > ps[c2] + tol]
+
+
+# ------------------------------------------------------------------ DGM (2006), Erdos-Renyi graphs
+def dgm_er_core_size(k, p, z):
+    """Size of the giant k-core (share of all vertices) of an ER graph with mean degree z after
+    keeping each vertex with probability p (Dorogovtsev, Goltsev & Mendes 2006, eqs. 1 and 4)."""
+    from scipy.special import gammaincc
+    if k <= 1:
+        return p
+    R = 0.0
+    for _ in range(200_000):                 # lowest root of R = 1 - p + p Q(k-1, z(1-R)), from R = 0
+        Rn = 1.0 - p + p * gammaincc(k - 1, z * (1.0 - R))
+        if abs(Rn - R) < 1e-14:
+            R = Rn
+            break
+        R = Rn
+    if R > 1.0 - 1e-9:
+        return 0.0
+    return p * (1.0 - gammaincc(k, z * (1.0 - R)))
+
+
+def dgm_er_Qc(k, z):
+    """Largest share Q of randomly removed vertices at which the giant k-core still exists."""
+    lo, hi = 0.0, 1.0
+    for _ in range(50):
+        mid = 0.5 * (lo + hi)
+        if dgm_er_core_size(k, 1.0 - mid, z) > 1e-6:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+
 if __name__ == "__main__":
     print("Table 1: x_crit and jump (phi = 0)")
     for (m, n, k) in [(1, 4, 1), (1, 4, 2), (2, 4, 1), (2, 4, 2), (2, 4, 3),
@@ -127,4 +181,19 @@ if __name__ == "__main__":
                   + " ".join(f"{v:.3f}" for v in vals))
     # check P3 closed form: phi* = 1 - x_crit / x when c = n
     for k in (1, 2):
-        print(f"  P3 check k={k}: 1 - xcrit/x = {1 - x_crit(2, 4, k) / 0.9:.3f}")
+        print(f"  THM2a check k={k}: 1 - xcrit/x = {1 - x_crit(2, 4, k) / 0.9:.3f}")
+    # Theorem 2 check and Proposition 4 scan
+    for k in (1, 2):
+        cf = phi_star_closed_form(0.9, 2, 4, k)
+        print(f"  THM2b k={k}: closed form spread={cf['spread']:.4f} colocated={cf['colocated']:.4f}  "
+              f"numeric {phi_star(0.9, 2, 4, k, 4):.4f} {phi_star(0.9, 2, 4, k, 1):.4f}")
+    cases = viol = viol_k1 = 0
+    for n in (2, 4, 6, 8):
+        for k in range(1, n + 1):
+            for m in (1, 2, 3):
+                for x in (0.6, 0.7, 0.8, 0.9, 0.95, 1.0):
+                    cases += 1
+                    if refinement_violations(x, m, n, k):
+                        viol += 1
+                        viol_k1 += (k == 1)
+    print(f"  TRAP scan: cases={cases} violations={viol} (k=1: {viol_k1})")

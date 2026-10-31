@@ -1,7 +1,7 @@
 E1: runs=3360  MAE vs depth-20 theory at realized phi = 0.0025 (95th pct 0.0057, max 0.408); MAE vs infinite-depth theory = 0.0200
 E1: runs away from threshold (fin~inf within .01): n=3192, MAE=0.0010
-E2 k=1: phi*=0.7222 runs=300 mean=0.042 frac<0.1=0.903 frac>0.4=0.000 median of survivors(>0.1)=0.146 max=0.205
-E2 k=2: phi*=0.1946 runs=300 mean=0.495 frac<0.1=0.203 frac>0.4=0.713 median of survivors(>0.1)=0.666 max=0.821
+E2 k=1: phi*=0.7222 runs=300 mean=0.042 frac<0.1=0.903 frac>0.4=0.000 median of survivors(>0.1)=0.146 median of runs>0.4=nan max=0.205
+E2 k=2: phi*=0.1946 runs=300 mean=0.495 frac<0.1=0.203 frac>0.4=0.713 median of survivors(>0.1)=0.666 median of runs>0.4=0.676 max=0.821
 E4b k=1 random   h= 1 firms_hit=0.5% supply_share=0.003 rho_sim=0.995+-0.001
 E4b k=1 random   h= 2 firms_hit=1.0% supply_share=0.014 rho_sim=0.989+-0.001
 E4b k=1 random   h= 3 firms_hit=1.5% supply_share=0.018 rho_sim=0.984+-0.001
@@ -39,12 +39,12 @@ E4b k=2 targeted h=10 firms_hit=5.0% supply_share=0.371 rho_sim=0.000+-0.000
 E4b k=2 targeted h=14 firms_hit=7.0% supply_share=0.414 rho_sim=0.000+-0.000
 E4b k=2 targeted h=20 firms_hit=10.0% supply_share=0.469 rho_sim=0.000+-0.000
 E4b: MAE vs depth-20 theory using supply-weighted shock = 0.0022
-E3 k=1 c=1: theory_inf=0.242 theory_D20=0.254 sim=0.255 [0.253,0.258] misclass=0.004 n=270
-E3 k=1 c=2: theory_inf=0.342 theory_D20=0.359 sim=0.357 [0.357,0.360] misclass=0.000 n=270
-E3 k=1 c=4: theory_inf=0.425 theory_D20=0.444 sim=0.445 [0.440,0.450] misclass=0.000 n=270
-E3 k=2 c=1: theory_inf=0.039 theory_D20=0.045 sim=0.042 [0.042,0.045] misclass=0.037 n=270
-E3 k=2 c=2: theory_inf=0.047 theory_D20=0.054 sim=0.053 [0.053,0.055] misclass=0.011 n=270
-E3 k=2 c=4: theory_inf=0.077 theory_D20=0.086 sim=0.085 [0.085,0.087] misclass=0.000 n=270
+E3 k=1 c=1: theory_inf=0.2417 theory_D20=0.2543 sim=0.2542 [0.2538,0.2550] networks=40 sims=412
+E3 k=1 c=2: theory_inf=0.3422 theory_D20=0.3586 sim=0.3585 [0.3575,0.3592] networks=40 sims=431
+E3 k=1 c=4: theory_inf=0.4249 theory_D20=0.4437 sim=0.4437 [0.4430,0.4442] networks=40 sims=455
+E3 k=2 c=1: theory_inf=0.0390 theory_D20=0.0446 sim=0.0447 [0.0442,0.0450] networks=40 sims=304
+E3 k=2 c=2: theory_inf=0.0468 theory_D20=0.0542 sim=0.0542 [0.0535,0.0545] networks=40 sims=338
+E3 k=2 c=4: theory_inf=0.0766 theory_D20=0.0864 sim=0.0867 [0.0860,0.0875] networks=40 sims=354
 E4a alpha=1.25  k=1 phi=0.00: rho=1.000+-0.000
 E4a alpha=1.25  k=1 phi=0.10: rho=0.890+-0.019
 E4a alpha=1.25  k=1 phi=0.20: rho=0.784+-0.029
@@ -79,3 +79,40 @@ E4a k=1 alpha=2.0: max |mean diff vs uniform| = 0.002
 E4a k=1 alpha=1.25: max |mean diff vs uniform| = 0.001
 E4a k=2 alpha=2.0: max |mean diff vs uniform| = 0.029
 E4a k=2 alpha=1.25: max |mean diff vs uniform| = 0.032
+E5 m=1 n=4 k=2 c=1: theory_inf=0.1946 theory_D20=0.2174 sim=0.2167 [0.2162,0.2175] networks=40 sims=413
+E5 m=1 n=4 k=2 c=2: theory_inf=0.1705 theory_D20=0.1946 sim=0.1948 [0.1940,0.1950] networks=40 sims=391
+E5 m=1 n=4 k=2 c=4: theory_inf=0.1946 theory_D20=0.2162 sim=0.2162 [0.2157,0.2170] networks=40 sims=416
+E5 m=1 n=6 k=3 c=1: theory_inf=0.1878 theory_D20=0.2014 sim=0.2013 [0.2008,0.2020] networks=40 sims=393
+E5 m=1 n=6 k=3 c=2: theory_inf=0.1370 theory_D20=0.1504 sim=0.1502 [0.1495,0.1510] networks=40 sims=380
+E5 m=1 n=6 k=3 c=3: theory_inf=0.1548 theory_D20=0.1670 sim=0.1668 [0.1665,0.1675] networks=40 sims=390
+E5 m=1 n=6 k=3 c=6: theory_inf=0.1878 theory_D20=0.2005 sim=0.2003 [0.1998,0.2010] networks=40 sims=389
+E5 m=2 n=6 k=3 c=1: theory_inf=0.0529 theory_D20=0.0569 sim=0.0568 [0.0565,0.0575] networks=40 sims=340
+E5 m=2 n=6 k=3 c=2: theory_inf=0.0461 theory_D20=0.0505 sim=0.0503 [0.0500,0.0508] networks=40 sims=320
+E5 m=2 n=6 k=3 c=3: theory_inf=0.0665 theory_D20=0.0719 sim=0.0717 [0.0715,0.0725] networks=40 sims=345
+E5 m=2 n=6 k=3 c=6: theory_inf=0.1030 theory_D20=0.1100 sim=0.1098 [0.1095,0.1105] networks=40 sims=381
+E5 m=3 n=4 k=2 c=1: theory_inf=0.0117 theory_D20=0.0142 sim=0.0143 [0.0140,0.0145] networks=40 sims=252
+E5 m=3 n=4 k=2 c=2: theory_inf=0.0170 theory_D20=0.0209 sim=0.0208 [0.0205,0.0210] networks=40 sims=267
+E5 m=3 n=4 k=2 c=4: theory_inf=0.0347 theory_D20=0.0415 sim=0.0418 [0.0410,0.0420] networks=40 sims=315
+THM2 check m=2 n=4 k=1 x=0.9: closed form spread=0.4249 colocated=0.2417; numeric spread=0.4249 colocated=0.2417
+THM2 check m=2 n=4 k=2 x=0.9: closed form spread=0.0766 colocated=0.0390; numeric spread=0.0766 colocated=0.0390
+THM2 check m=3 n=4 k=2 x=0.9: closed form spread=0.0347 colocated=0.0117; numeric spread=0.0347 colocated=0.0117
+THM2 check m=1 n=4 k=2 x=0.9: closed form spread=0.1946 colocated=0.1946; numeric spread=0.1946 colocated=0.1946
+TRAP scan: cases=360 violations=72 (k=1: 0)
+PHISTAR deep x=0.9 m=1 n=4 k=2: c=1:0.1946 c=2:0.1705 c=4:0.1946
+PHISTAR deep x=0.9 m=1 n=6 k=3: c=1:0.1878 c=2:0.1370 c=3:0.1548 c=6:0.1878
+PHISTAR deep x=0.95 m=2 n=6 k=3: c=1:0.0781 c=2:0.0699 c=3:0.0977 c=6:0.1502
+PHISTAR deep x=0.9 m=2 n=6 k=3: c=1:0.0529 c=2:0.0461 c=3:0.0665 c=6:0.1030
+TABLE1 m=1 n=4 k=1: x_crit=0.250 jump=0.000
+TABLE1 m=1 n=4 k=2: x_crit=0.725 jump=0.745
+TABLE1 m=2 n=4 k=1: x_crit=0.518 jump=0.638
+TABLE1 m=2 n=4 k=2: x_crit=0.831 jump=0.879
+TABLE1 m=2 n=8 k=2: x_crit=0.500 jump=0.781
+TABLE2 m=2 n=4 k=2 c=4 x=0.9: rho(phi=0.05)=0.913 phi*=0.0766
+E4b k=2 random h<=10: runs=140 collapsed(rho<0.1)=0.050
+E6 k=2: Qc_theory=0.8998 last_Q_below=0.890 size=0.001 first_Q_above=0.910 size=0.000
+E6 k=3: Qc_theory=0.6649 last_Q_below=0.655 size=0.142 first_Q_above=0.675 size=0.000
+E6 k=4: Qc_theory=0.4851 last_Q_below=0.475 size=0.287 first_Q_above=0.495 size=0.000
+E6 k=5: Qc_theory=0.3201 last_Q_below=0.310 size=0.444 first_Q_above=0.330 size=0.000
+E6 k=6: Qc_theory=0.1635 last_Q_below=0.153 size=0.599 first_Q_above=0.173 size=0.000
+E6 k=7: Qc_theory=0.0125 last_Q_below=0.002 size=0.735 first_Q_above=0.022 size=0.000
+E6: MAE vs DGM theory away from thresholds (|Q-Qc|>0.02) = 0.0005 (n=178, max 0.0048)
