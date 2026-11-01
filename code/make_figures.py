@@ -22,13 +22,16 @@ BLUE, ORANGE, AQUA, YELLOW = "#2a78d6", "#eb6834", "#1baf7a", "#eda100"
 INK, MUTED, GRID = "#1f1f1d", "#6b6a63", "#e1e0d9"
 plt.rcParams.update({
     "font.family": "serif", "font.serif": ["STIXGeneral"],  # bundled with matplotlib, so every machine renders alike
-    "mathtext.fontset": "stix", "pdf.fonttype": 42, "font.size": 8, "axes.titlesize": 8.5, "axes.labelsize": 8,
-    "legend.fontsize": 6.8, "xtick.labelsize": 7, "ytick.labelsize": 7,
+    "mathtext.fontset": "stix", "pdf.fonttype": 42, "font.size": 8, "axes.titlesize": 8, "axes.labelsize": 8,
+    "legend.fontsize": 7, "xtick.labelsize": 7, "ytick.labelsize": 7,
     "axes.edgecolor": "#c3c2b7", "axes.labelcolor": INK, "xtick.color": MUTED,
     "ytick.color": MUTED, "axes.grid": True, "grid.color": GRID, "grid.linewidth": 0.5,
     "axes.spines.top": False, "axes.spines.right": False, "lines.linewidth": 1.4,
     "legend.frameon": False,
 })
+# Figures are drawn at their printed size (paper.tex includes them at 0.92\linewidth = 5.98 in), so the font sizes
+# above are the sizes on the page.
+FIG_W = 0.92 * 6.5
 PDF_META = {"CreationDate": None}           # no timestamp, so reruns give byte-identical PDFs
 load = lambda f: json.load(open(os.path.join(RES, f)))
 out = []
@@ -43,7 +46,7 @@ def group_mean(runs, keyf, valf):
 
 # ---------------------------------------------------------------- Figure 1: validation (E1)
 e1 = load("e1.json")
-fig, ax = plt.subplots(1, 3, figsize=(6.8, 2.05), gridspec_kw=dict(width_ratios=[1.15, 1, 1]))
+fig, ax = plt.subplots(1, 3, figsize=(FIG_W, 1.72), gridspec_kw=dict(width_ratios=[1.15, 1, 1]))
 xs = np.linspace(0.2, 1.0, 400)
 for (m, k), col, mk in [((1, 1), BLUE, "o"), ((1, 2), ORANGE, "s"), ((2, 1), AQUA, "^"), ((2, 2), YELLOW, "D")]:
     ax[0].plot(xs, [rho(x, m, 4, k) for x in xs], color=col, lw=1.3)
@@ -53,8 +56,8 @@ for (m, k), col, mk in [((1, 1), BLUE, "o"), ((1, 2), ORANGE, "s"), ((2, 1), AQU
     ax[0].plot(kx, [gm[x][0] for x in kx], mk, color=col, ms=3.4, mec="white", mew=0.5,
                label=f"$m={m},\\ k={k}$")
 ax[0].set(xlabel="relationship strength $x$", ylabel=r"reliability $\rho$", xlim=(0.2, 1.0),
-          ylim=(-0.03, 1.03), title=r"(a) No shock ($\phi=0$, $n=4$)")
-ax[0].legend(loc="upper left", handletextpad=0.2, borderaxespad=0.2)
+          ylim=(-0.03, 1.38), yticks=[0, 0.25, 0.5, 0.75, 1.0], title=r"(a) No shock ($\phi=0$)")
+ax[0].legend(loc="upper center", ncol=2, handletextpad=0.2, columnspacing=0.8, borderaxespad=0.1)
 
 for j, (k, pmax) in enumerate([(1, 0.5), (2, 0.12)], start=1):
     p = np.linspace(0, pmax, 500)
@@ -68,6 +71,8 @@ for j, (k, pmax) in enumerate([(1, 0.5), (2, 0.12)], start=1):
                    label=f"$c={c}$")
     ax[j].set(xlabel=r"share of regions hit $\phi$", ylim=(-0.03, 1.03), xlim=(0, pmax),
               title=f"({'bc'[j-1]}) Regional shock, $k={k}$")
+    if k == 2:
+        ax[j].set_xticks([0, 0.04, 0.08, 0.12])
     ax[j].legend(loc="lower left", handletextpad=0.2, borderaxespad=0.2)
 fig.tight_layout(pad=0.6, w_pad=0.8)
 fig.savefig(os.path.join(FIG, "fig_validation.pdf"), metadata=PDF_META)
@@ -83,7 +88,7 @@ out.append(f"E1: runs away from threshold (fin~inf within .01): n={len(far)}, MA
 # ---------------------------------------------------------------- Figure 2: E2 + E4b
 e2 = load("e2.json")
 e4 = load("e4.json")
-fig, ax = plt.subplots(1, 3, figsize=(6.9, 2.1), gridspec_kw=dict(width_ratios=[1, 1.15, 0.95]))
+fig, ax = plt.subplots(1, 3, figsize=(FIG_W, 1.72), gridspec_kw=dict(width_ratios=[1, 1.15, 0.95]))
 bins = np.linspace(0, 1, 21)
 vals, labs = [], []
 for k in (1, 2):
@@ -97,7 +102,7 @@ for k in (1, 2):
                f"max={v.max():.3f}")
 ax[0].hist(vals, bins=bins, color=[BLUE, ORANGE], label=labs, rwidth=0.9)
 ax[0].set(xlabel=r"reliability $\rho$ of one replication", ylabel="replications",
-          title=r"(a) Outcomes at threshold ($m=1$, $n=4$, $x=0.9$)")
+          title=r"(a) Outcomes at threshold")
 ax[0].legend(loc="upper center")
 
 b = [r for r in e4["runs"] if r["_exp"] == "E4b"]
@@ -120,9 +125,9 @@ for k in (1, 2):
         for h in sorted(gm):
             out.append(f"E4b k={k} {mode:8s} h={h:2d} firms_hit={h/2:.1f}% supply_share={sh[h][0]:.3f} "
                        f"rho_sim={gm[h][0]:.3f}+-{gm[h][1]:.3f}")
-ax[1].set(xlabel="supply-weighted share of clusters hit $\\phi_s$", ylabel="reliability outside hit regions",
-          ylim=(-0.03, 1.03), xlim=(0, 0.5), title="(b) Hub regions: random vs targeted shocks")
-ax[1].legend(loc="center", bbox_to_anchor=(0.42, 0.45), ncol=1, handletextpad=0.2, fontsize=6.3)
+ax[1].set(xlabel="supply-weighted share of clusters hit $\\phi_s$", ylabel="reliability (unhit regions)",
+          ylim=(-0.03, 1.03), xlim=(0, 0.5), title="(b) Hub regions")
+ax[1].legend(loc="center", bbox_to_anchor=(0.57, 0.45), ncol=1, handletextpad=0.2, labelspacing=0.25)
 # (c) the diversification trap (E5): phi* against cluster count c
 e5 = load("e5.json")
 cs_all = [1, 2, 3, 4, 6]
@@ -135,12 +140,13 @@ for (m, n, k), col, mk in [((1, 4, 2), BLUE, "o"), ((1, 6, 3), ORANGE, "s"), ((2
     ax[2].errorbar(xs_, [s["phi_star_sim"] for s in rows],
                    yerr=[[s["phi_star_sim"] - s["ci_lo"] for s in rows], [s["ci_hi"] - s["phi_star_sim"] for s in rows]],
                    fmt=mk, color=col, ms=3.2, mec="white", mew=0.4, elinewidth=0.8, capsize=1.5,
-                   label=f"$m={m},n={n},k={k}$")
+                   label=f"$({m},{n},{k})$")
 ax[2].set_xticks(range(len(cs_all)), [str(c) for c in cs_all])
-ax[2].set(xlabel="supplier clusters $c$ (1 = co-located)", ylabel=r"tolerable shock $\phi^*$",
-          title="(c) Shock tolerance by clusters", ylim=(0, 0.31))
-ax[2].legend(loc="upper center", ncol=2, handletextpad=0.1, columnspacing=0.6, borderaxespad=0.1, fontsize=5.6)
-fig.tight_layout(pad=0.6, w_pad=0.9)
+ax[2].set(xlabel="supplier clusters $c$", ylabel=r"tolerable shock $\phi^*$",
+          title="(c) Tolerable shock", ylim=(0, 0.36), yticks=[0, 0.1, 0.2, 0.3])
+ax[2].legend(loc="upper center", ncol=2, handletextpad=0.1, columnspacing=0.8, borderaxespad=0.1, labelspacing=0.2,
+             title="$(m,n,k)$", title_fontsize=7)
+fig.tight_layout(pad=0.4, w_pad=0.9)
 fig.savefig(os.path.join(FIG, "fig_bimodal_hubs.pdf"), metadata=PDF_META)
 e4b_err = np.array([abs(r["rho_sim"] - r["theory_fin"]) for r in b])
 out.append(f"E4b: MAE vs depth-20 theory using supply-weighted shock = {e4b_err.mean():.4f}")
