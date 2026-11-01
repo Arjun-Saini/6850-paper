@@ -4,11 +4,11 @@
 - `paper.tex` / `paper.pdf`: the paper (5 pages of content plus a references page).
 - `figures/`: figures included by the paper (built by `code/make_figures.py`).
 - `results/`: raw simulation output (`e1.json` … `e4.json`), `summary.txt` (every number quoted in the paper), and `run_log.txt`.
-- `code/model.py`: mean-field theory, plus the geography theorems (`phi_star_closed_form`, `refinement_violations`) and DGM's Erdős–Rényi k-core equations (`dgm_er_core_size`, `dgm_er_Qc`). It solves the recursion (eq. 2 in the paper) for its largest fixed point and computes `x_crit`, `phi_star`, and finite-depth reliability. Running `python3 model.py` reproduces the analytic numbers (x_crit table, phi* table, Proposition 2 and Theorem 3 checks, trap scan).
+- `code/model.py`: mean-field theory, plus the geography results (`phi_star_closed_form` for Claim 2, `refinement_violations` for the Example 1 scan) and DGM's Erdős–Rényi k-core equations (`dgm_er_core_size`, `dgm_er_Qc`). It solves the recursion (eq. 2 in the paper) for its largest fixed point and computes `x_crit`, `phi_star`, and finite-depth reliability. Running `python3 model.py` reproduces the analytic numbers (x_crit table, phi* table, Claim 2 checks, Example 1 scan).
 - `code/simulate.py`: Monte Carlo on finite layered networks (vectorized NumPy). Supports k-of-n sourcing, c supplier clusters, regional shocks, heavy-tailed supplier popularity (`alpha`), hub regions (`region_weights`), and targeted shocks (`hit`). Running `python3 simulate.py` does a quick smoke test against the theory.
 - `code/kcore.py`: k-core peeling (Batagelj–Zaversnik) and an Erdős–Rényi generator, used by E6.
 - `code/run_experiments.py`: runs experiments by name, e.g. `python3 run_experiments.py E5 E6`; with no names it runs E1–E4 (about 25 min on 2 cores; `--quick` takes about 5 min with fewer replications).
-- `tests/`: `python3 -m pytest tests` checks each theorem against the numerical recursion, the k-core code, and the experiment CLI.
+- `tests/`: `python3 -m pytest tests` checks Claims 1-3 and Example 1 against the numerical recursion, the k-core code, and the experiment CLI.
 - `NOTES.md`: what the `geography-kcore` branch changed and why.
 - `code/make_figures.py`: builds the figures and `results/summary.txt` from the JSON results.
 
@@ -30,13 +30,13 @@ inputs gives byte-identical figures on any machine. If you change the figure cod
 and commit the regenerated figures and `summary.txt` in the same commit.
 
 ## Experiments
-| ID | Hypothesis | What it does |
+| ID | Question | What it does |
 |----|-----------|---------------|
-| E1 | H1: simulations match eq. (2) | sweeps x (phi = 0) and phi (x = 0.9) for k in {1,2}, c in {1,2,4}; compares each run to theory at its realized share of hit regions |
-| E2 | H2: k >= 2 gives bimodal outcomes | 300 runs each of m = 1, k in {1,2} at the theoretical phi* |
-| E3 | does phi* increase with c? (yes for k = 1, Claim 3; not always for k >= 2, Example 1) | phi* for m = 2, n = 4, k in {1,2}, c in {1,2,4}: bisects the tipping point of 40 networks per setting, reports the median and a bootstrap 95% CI |
-| E4 | H4: realism | (a) Pareto supplier popularity; (b) Pareto supply weights across regions, hit by targeted vs random shocks |
-| E5 | Claim 2, Example 1 | same method as E3 for every cluster count c of (m,n,k) in {(1,4,2),(1,6,3),(2,6,3),(3,4,2)} |
+| E1 | validation: simulations match eq. (2) | sweeps x (phi = 0) and phi (x = 0.9) for k in {1,2}, c in {1,2,4}; compares each run to theory at its realized share of hit regions |
+| E2 | Q1: k >= 2 gives bimodal outcomes | 300 runs each of m = 1, k in {1,2} at the theoretical phi* |
+| E3 | Q2: does phi* increase with c? (yes for k = 1, Claim 3; not always for k >= 2, Example 1) | phi* for m = 2, n = 4, k in {1,2}, c in {1,2,4}: bisects the tipping point of 40 networks per setting, reports the median and a bootstrap 95% CI |
+| E4 | Q3: realism (firms vs supply) | (a) Pareto supplier popularity; (b) Pareto supply weights across regions, hit by targeted vs random shocks |
+| E5 | Q2: Claim 2, Example 1 | same method as E3 for every cluster count c of (m,n,k) in {(1,4,2),(1,6,3),(2,6,3),(3,4,2)} |
 | E6 | DGM reproduction | k-core sizes of Erdős–Rényi graphs (N = 100,000, mean degree 10) after random vertex removal, against DGM's thresholds |
 
 Default network: depth 20 (21 layers), N = 20,000 firms per layer, G = 200 regions, m = 2, n = 4, x = 0.9.

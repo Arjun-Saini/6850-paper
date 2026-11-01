@@ -1,10 +1,10 @@
 """Run all simulation experiments for the exploratory paper and save raw results to ../results.
 
-  E1  Validation: Monte Carlo vs mean-field theory (sweeps over x and over phi).        [H1]
-  E2  Bimodality: distribution of outcomes across replications near the threshold.     [H2]
+  E1  Validation: Monte Carlo vs mean-field theory (sweeps over x and over phi).        [Sec. 7 setup]
+  E2  Bimodality: distribution of outcomes across replications near the threshold.     [Q1]
   E3  Collapse thresholds phi* vs supplier geography c, simulation vs theory.          [Claims 2-3]
   E4  Realism: heavy-tailed supplier popularity, and hub regions hit by random vs
-      targeted shocks.                                                                  [H4]
+      targeted shocks.                                                                  [Q3]
   E5  Pairs reversal and closed form: phi* vs cluster count c on finite networks.      [Claim 2, Example 1]
       E3 and E5 bisect each network's tipping point (number of hit regions) on G = 2000 regions.
   E6  DGM (2006) reproduction: k-core sizes of damaged Erdos-Renyi graphs vs theory.     [DGM]
@@ -239,7 +239,7 @@ def e4():
 
 
 def e5():
-    """Theorem 2 and Proposition 4 on finite networks: phi* for every cluster count c | n."""
+    """Claim 2 and Example 1 on finite networks: phi* for every cluster count c | n."""
     configs = [(1, 4, 2), (1, 6, 3), (2, 6, 3), (3, 4, 2)]
     return threshold_experiment("E5", [(m, n, k, c) for (m, n, k) in configs
                                        for c in range(1, n + 1) if n % c == 0], 60000)
