@@ -44,14 +44,16 @@ def _draw_distinct(rng, starts, counts, cum_w, order, regions, b):
 
 
 def simulate(m=2, n=4, k=1, x=0.9, phi=0.0, c=None, depth=20, N=20000, G=200,
-             alpha=None, region_weights=None, hit=None, seed=0, return_layers=False):
+             alpha=None, region_weights=None, hit=None, seed=0, return_layers=False, balanced=False):
     """Return the fraction of functional firms in the deepest layer (aggregate reliability).
 
     region_weights: optional length-G supply weights; a supplier cluster is placed in region g
       with probability proportional to region_weights[g] (hub regions host more supply
       relationships). Firms themselves stay uniformly spread over regions.
     hit: optional boolean length-G array fixing which regions are hit (overrides phi), used for
-      targeted shocks."""
+      targeted shocks.
+    balanced: put exactly N / G firms in every region (still in random order) instead of drawing
+      each firm's region independently; needed when N / G is small (many regions)."""
     c = n if c is None else c
     assert n % c == 0
     b = n // c
@@ -59,8 +61,10 @@ def simulate(m=2, n=4, k=1, x=0.9, phi=0.0, c=None, depth=20, N=20000, G=200,
     hit = (rng.random(G) < phi) if hit is None else np.asarray(hit, dtype=bool)
     pw = None if region_weights is None else np.asarray(region_weights, float) / np.sum(region_weights)
 
+    assert not balanced or N % G == 0, "balanced placement needs G to divide N"
+
     def new_layer():
-        reg = rng.integers(G, size=N)
+        reg = rng.permutation(np.repeat(np.arange(G), N // G)) if balanced else rng.integers(G, size=N)
         fit = None if alpha is None else rng.pareto(alpha, size=N) + 1.0
         return reg, fit
 
