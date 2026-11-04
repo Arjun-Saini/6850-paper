@@ -7,7 +7,7 @@ Prep for the CS/INFO 6850 one-on-one presentation of our exploratory paper,
 (1) our questions and prior work, (2) what we did beyond it, and (3) what we found, each with the **math** and the **simulations**.
 Staff grade whether we can explain the questions, methods and conclusions accurately in our own words. They don't ask for exact numbers.
 
-**Interactive study page:** *(link added after publishing)*. It has the same content as these files, plus flashcards and a model explorer.
+**Interactive study page:** <https://claude.ai/artifact/TBmHpB8bvmasdEFWix6brg> (private: share it with Arjun from the page's Share menu). It has the same content as these files, plus flashcards and a model explorer.
 The same page is saved here as `study-guide.html`.
 
 ## Suggested study order
@@ -17,7 +17,7 @@ The same page is saved here as `study-guide.html`.
 | 1 | [`01-opening-summary.md`](01-opening-summary.md) | **The only thing we say to staff unprompted.** A 2-minute opening, a 5-step outline to memorize, a 30-second fallback. | 15 min, then rehearse out loud |
 | 2 | [`02-our-work-explained.md`](02-our-work-explained.md) | Our model, Claims 1–3, Example 1 and the simulations: TL;DR, ELI5, proof ideas, flow diagrams, plots | 40 min |
 | 3 | [`03-papers/`](03-papers/) | Every paper we used: TL;DR + ELI5 + visual + how we used it | 40 min |
-| 4 | [`04-qa-bank.md`](04-qa-bank.md) | ~50 likely questions with short and "if pushed" answers (★ = most likely) | drill out loud |
+| 4 | [`04-qa-bank.md`](04-qa-bank.md) | 60 likely questions with short and "if pushed" answers (★ = most likely) | drill out loud |
 | 5 | [`05-cheatsheet.md`](05-cheatsheet.md) | Notation, vocabulary, ten takeaways | last look before going in |
 
 ## How to practise
@@ -31,5 +31,6 @@ The same page is saved here as `study-guide.html`.
 ## Folder contents
 
 - `figures/`: plots generated from `code/model.py` by `tools/make_prep_figures.py`
-- `tools/`: explorer math (`explorer_math.js`) and its check against the Python model, the figure script, and the study-page builder
+- `tools/`: explorer math (`explorer_math.js`) and its check against the Python model (`check_explorer.mjs`), the figure script, the study-page builder (`build_study_guide.py`), and the checks `check_docs.py` and `render_check.py`
+- Rebuild after editing any Markdown: `python3 tools/build_study_guide.py`
 - `planning/`: the design spec and plan for this folder
