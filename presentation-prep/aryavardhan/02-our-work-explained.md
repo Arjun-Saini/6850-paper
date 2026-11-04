@@ -201,8 +201,11 @@ flowchart TD
 **Interesting detail in the plot:** for small shocks, pairs actually have *higher* reliability than co-located suppliers, yet they
 **break first**. Safety in normal times and safety at the edge are different things.
 
-**How general:** in a grid search (even n ≤ 8, m ≤ 3, six values of x), reversals like this appeared in **72 of the 109 settings with
-k ≥ 2 where some geography tolerates a shock**, and in **none with k = 1**. The simulations also show a similar reversal for n = 6, k = 3.
+**How general:** in a grid search (even n ≤ 8, m ≤ 3, six values of x), reversals like this appeared in **about two-thirds of the settings
+with k ≥ 2 where some geography tolerates a shock**, and in **none with k = 1**. The simulations also show a similar reversal for n = 6, k = 3.
+
+> *Exact count, if it ever comes up:* the paper says "72 of the 109". Our recheck finds 72 reversals among **110** such settings, or 71 among 109
+> if settings with a tolerable shock below 0.001 are excluded. It's off by one either way and changes nothing; just say "about two-thirds".
 
 **DGM link:** the barely sourced firms are like DGM's vertices with **exactly k core neighbors**. Remove one more and they fall out.
 

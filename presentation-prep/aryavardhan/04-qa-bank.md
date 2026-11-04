@@ -84,7 +84,7 @@ How to drill: cover the answers, say yours out loud, then compare. On the study 
 
 ### QC3. So is spreading suppliers out always better?
 **Short:** Fully spreading is never worse than co-locating (they tie with one input, and spreading wins with more). Partial spreading is the risky one: with k = 1 any finer split helps, but with k ≥ 2 an intermediate split like two pairs can be worst.
-**If pushed:** In our grid search the reversal showed up in 72 of the 109 settings with k ≥ 2 where some geography survives a shock, and never with k = 1. It's common, but it doesn't hold everywhere.
+**If pushed:** In our grid search the reversal showed up in about two-thirds of the k ≥ 2 settings where some geography survives a shock, and never with k = 1. It's common, but it doesn't hold everywhere.
 
 ### QC4. Does a region's number of firms or its share of supply matter more?
 **Short:** Supply share, by far. One region holding a big share of supply relationships but very few firms can collapse a k = 2 network on its own, while hitting many random regions rarely does.

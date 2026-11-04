@@ -15,7 +15,8 @@ import tempfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 PREP = os.path.dirname(HERE)
 REPO = os.path.abspath(os.path.join(PREP, "..", ".."))
-DERIVED = {"420,000": "21 layers x 20,000 firms (paper Sec. 7 setup)"}
+DERIVED = {"420,000": "21 layers x 20,000 firms (paper Sec. 7 setup)",
+           "110": "trap-scan recheck: k>=2 settings with some phi* > 0 (Task 6)", "0.001": "tolerance used in that recheck"}
 DOCS = sorted(glob.glob(os.path.join(PREP, "*.md")) + glob.glob(os.path.join(PREP, "03-papers", "*.md")))
 # Paper explainers quote the source papers' own numbers; those are checked against the sources, not our paper.
 OUR_DOCS = [d for d in DOCS if "03-papers" not in d and not d.endswith("README.md")]
