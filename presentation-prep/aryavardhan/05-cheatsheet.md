@@ -43,7 +43,7 @@
 
 1. Needing **two of anything** (inputs or suppliers per input) turns gradual decline into a **cliff** (Claim 1).
 2. The new case is **one input, two required suppliers**: EGL needed several inputs for a cliff, and we don't.
-3. Spreading suppliers out is mathematically **the same as weakening every relationship** (Claim 2a).
+3. With spread suppliers, a regional shock acts **exactly like weakening every relationship** from x to (1−φ)x (Claim 2a).
 4. With **one input**, spread and co-located suppliers break at **the same shock** (Claim 2b).
 5. With **several inputs**, co-location breaks earlier, because each input can be wiped out separately.
 6. If **one supplier is enough**, splitting regions further **never hurts** (Claim 3, Jensen).

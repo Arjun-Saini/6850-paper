@@ -27,7 +27,7 @@ How to drill: cover the answers, say yours out loud, then compare. On the study 
 **If pushed:** Difference-in-differences on roughly three-quarters of a million Japanese firms, comparing firms 1–4 links from the disaster area with firms 5+ links away. Their calibrated model says network links roughly doubled the GDP hit.
 
 ### QA5. What's a k-core, and why is DGM relevant to supply chains?
-**Short:** It's what remains after repeatedly deleting nodes with fewer than k neighbors. For k ≥ 3 it vanishes with a jump under random damage, and our equation with one input is the same equation as DGM's.
+**Short:** It's what remains after repeatedly deleting nodes with fewer than k neighbors. For k ≥ 3 it vanishes with a jump under random damage, and our equation with one input has the same form as DGM's equation (binomial instead of Poisson).
 **If pushed:** Our k corresponds to their K = k + 1 core: a core vertex needs k neighbors besides the one it was reached from, as our firm needs k suppliers below it. So DGM predicted our cliff for k ≥ 2.
 
 ### QA6. Hasn't someone already studied geographic diversification in supply networks? ★
@@ -95,7 +95,7 @@ How to drill: cover the answers, say yours out loud, then compare. On the study 
 **If pushed:** It also says *where* cliffs should show up in data: firms left with fewer than k suppliers for some input.
 
 ### QC6. How robust is the pairs result?
-**Short:** It's exact in the model: we derive the coverage difference in closed form and see why its sign flips at p = 2/3. The simulations separate the thresholds clearly. But it isn't universal: it depends on n, k, m and x.
+**Short:** It's a numerical result of the model, solved precisely, and an exact formula explains it: the coverage difference sφ[2p² − S₂(4,p)] turns negative below p = 2/3, and at the pairs tipping point p is about 0.6. The simulations separate the thresholds clearly. But it isn't universal: it depends on n, k, m and x.
 **If pushed:** For example, with two inputs, n = 4 and k = 2, the ordering is monotone (co-located < pairs < spread). We'd like a clean rule for when pairs are worst; that's an open question.
 
 ### QC7. How do you reconcile CNST's smooth evidence with your cliffs?
@@ -158,6 +158,10 @@ How to drill: cover the answers, say yours out loud, then compare. On the study 
 **Short:** A finite network has less depth for failures to build up, so its thresholds sit a bit higher. Twenty steps of the equation is the right comparison for a 20-layer network, and the simulations match it.
 **If pushed:** The infinite-depth values are still the ones the claims are about; the gap between the two is a depth effect, not an error.
 
+### QE2b. In Table 1, co-located and spread don't tie at 20 layers with one input. Doesn't that contradict Claim 2?
+**Short:** No. Claim 2(b) is an infinite-depth statement, and there the two thresholds are identical. At 20 layers the two recursions differ slightly, and the simulations match each 20-layer value.
+**If pushed:** Finite depth gives failures less room to build up, so both 20-layer thresholds sit a bit above the infinite-depth one; the small gap between them is a depth effect that shrinks as the network gets deeper.
+
 ### QE3. What does the bimodality experiment show? ★
 **Short:** At the predicted threshold, k = 1 networks all fade to low reliability, while k = 2 networks split into two groups: collapsed or healthy, with little in between. That's what a cliff looks like in finite networks.
 **If pushed:** Which group a run lands in tracks how many regions happened to be hit in that run, just above or below the 20-layer threshold.
@@ -172,10 +176,10 @@ How to drill: cover the answers, say yours out loud, then compare. On the study 
 
 ### QE6. Why did you reproduce DGM's k-core thresholds?
 **Short:** As a check on our tooling: our own pruning code on simulated 100,000-vertex random graphs finds every k-core vanishing close to DGM's predicted thresholds.
-**If pushed:** It also confirms the K = k + 1 analogy numerically, and the striking contrast: the 7-core disappears after removing only about 1.25% of vertices, while the giant component survives until about 90%.
+**If pushed:** It also shows the striking contrast: the 7-core disappears after removing only about 1.25% of vertices, while the giant component survives until about 90%. (It checks our pruning code; the network simulator is checked separately, against the 20-layer theory.)
 
 ### QE7. How do you know your code is right?
-**Short:** Three ways: the simulations match an independent theory computation; the code reproduces DGM's published k-core thresholds; and an automated test suite checks every claim against the numerical recursion.
+**Short:** Three ways: the simulations match an independent theory computation; our separate k-core pruning code matches the thresholds from DGM's equations; and an automated test suite checks every claim against the numerical recursion.
 **If pushed:** We also made the results reproducible: fixed random seeds, and regenerating the figures gives identical files.
 
 ### QE8. What is a "supply-weighted" shock?
@@ -208,7 +212,7 @@ How to drill: cover the answers, say yours out loud, then compare. On the study 
 
 ### QF6. Why assume regions are hit independently?
 **Short:** It's the simplest model of correlated failure: everything inside a region fails together, regions are independent. It isolates the effect of how suppliers are grouped.
-**If pushed:** If neighboring regions tend to be hit together, that effectively merges clusters (lowers c), which our framework can describe.
+**If pushed:** In the extreme where two regions are always hit together, they act as one cluster (lower c). Partial correlation between regions is outside our model.
 
 ---
 
@@ -236,9 +240,9 @@ How to drill: cover the answers, say yours out loud, then compare. On the study 
 ## H. "Explain it yourself" (checks that you understand without the paper)
 
 ### QH1. Explain the cliff to someone with no math background. ★
-**Short:** Each firm needs its suppliers, which need theirs, and so on. If needing one thing goes wrong a bit more often, things get a bit worse. But if you need two things, small problems compound, and past a point the chain can't sustain itself: it goes from mostly working to not working at all.
+**Short:** Each firm needs its suppliers, which need theirs, and so on. If you need just one thing from one supplier and things go wrong a bit more often, output gets a bit worse. But if you need two things (two inputs, or two suppliers), small problems compound, and past a point the chain can't sustain itself: it goes from mostly working to not working at all.
 
-**If pushed:** Use your hands: a gentle slope for k = 1, a drop-off for k = 2.
+**If pushed:** Use your hands: with one input, a gentle slope for k = 1, a drop-off for k = 2.
 
 ### QH2. Describe the fixed-point picture without drawing it.
 **Short:** Plot "chance a firm works" against "chance its suppliers work". Reliability is where that S-shaped curve crosses the diagonal. A shock lowers the curve; when it only just touches the diagonal, one more push and the crossing is gone, so reliability falls to zero.

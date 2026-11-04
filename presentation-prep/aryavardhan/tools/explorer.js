@@ -7,7 +7,7 @@
   const NS = "http://www.w3.org/2000/svg";
   const SERIES = ["var(--s1)", "var(--s2)", "var(--s3)", "var(--s4)"];
   const DASH = ["", "6 4", "2 3", "10 3 2 3"];
-  const NAMES = (n, c) => (c === 1 ? "co-located" : c === n ? "spread" : c * 2 === n ? "pairs" : `${c} clusters of ${n / c}`);
+  const NAMES = (n, c) => (c === 1 ? "co-located" : c === n ? "spread" : c === 2 && n === 4 ? "two pairs" : n / c === 2 ? `${c} pairs` : `${c} clusters of ${n / c}`);
   const PRESETS = {
     egl: { m: 2, n: 4, k: 1, c: 4, x: 0.6, phi: 0, note: "EGL's cliff: two inputs, one supplier each. Slide x down past about 0.52 and reliability jumps to zero." },
     newcliff: { m: 1, n: 4, k: 2, c: 4, x: 0.8, phi: 0, note: "Our new cliff: ONE input, but two suppliers needed. Slide x down past about 0.72." },
@@ -106,11 +106,12 @@
     const P = { x: S.x, m: S.m, n: S.n, k: S.k, c: S.c };
     const GRID = 600;
     // Panel A: cliff, r* against x at the current phi and c
-    const xs = []; for (let i = 0; i <= 140; i++) xs.push(0.3 + (0.7 * i) / 140);
+    const xs = []; for (let i = 0; i <= 170; i++) xs.push(0.15 + (0.85 * i) / 170);
     const cliff = xs.map((x) => [x, rStar(S.phi, { ...P, x }, GRID)]);
+    window.__explorer.cliffMin = Math.min(...cliff.map((p) => p[1]));
     const rNow = rStar(S.phi, P);
     plot($("ex-plot-cliff"), {
-      x0: 0.3, x1: 1, y0: 0, y1: 1, xticks: [0.3, 0.5, 0.7, 0.9], yticks: [0, 0.5, 1],
+      x0: 0.15, x1: 1, y0: 0, y1: 1, xticks: [0.2, 0.4, 0.6, 0.8, 1], yticks: [0, 0.5, 1],
       xlabel: "relationship strength x", ylabel: "reliability r*",
       series: [{ pts: cliff, color: "var(--s1)" }], vlines: [{ x: S.x, color: "var(--accent)" }],
       markers: [{ x: S.x, y: rNow, color: "var(--accent)" }],

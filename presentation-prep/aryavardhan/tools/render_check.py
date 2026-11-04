@@ -79,6 +79,21 @@ with sync_playwright() as p:
             check(0.165 <= ps.get(2, -1) <= 0.177, f"explorer: pairs phi* = {ps.get(2)}")
             check(ps.get(2, 1) < ps.get(1, 0) and ps.get(2, 1) < ps.get(4, 0), f"explorer: pairs not worst: {ps}")
         page.screenshot(path=os.path.join(SHOTS, f"{w}-explorer-pairs.png"), full_page=True)
+        # review regressions: smooth preset must show reliability reaching 0 inside the x range
+        page.click('[data-preset="smooth"]')
+        page.wait_for_timeout(1200)
+        cm = page.evaluate("window.__explorer.cliffMin")
+        x0 = float(page.get_attribute("#ex-x", "min"))
+        check(cm == 0 and x0 <= 0.2, f"explorer: smooth preset cliffMin={cm}, x slider min={x0}")
+        # split labels: n=6 shows "2 clusters of 3" and "3 pairs"; n=4 shows "two pairs"
+        page.select_option("#ex-n", "6")
+        page.wait_for_timeout(300)
+        labels6 = page.eval_on_selector_all("#ex-c option", "els => els.map(e => e.textContent)")
+        check(any("2 clusters of 3" in s for s in labels6) and any("3 pairs" in s for s in labels6), f"explorer n=6 labels: {labels6}")
+        page.select_option("#ex-n", "4")
+        page.wait_for_timeout(300)
+        labels4 = page.eval_on_selector_all("#ex-c option", "els => els.map(e => e.textContent)")
+        check(any("two pairs" in s for s in labels4), f"explorer n=4 labels: {labels4}")
         real = [e for e in errors if not any(s in e for s in IGNORE)]
         check(not real, f"{w}px console errors: {real[:3]}")
         page.close()

@@ -51,7 +51,7 @@ flowchart TD
 - **Corona ↔ "barely sourced" firms:** in Example 1, firms that lose one regional pair are left with **exactly k** suppliers, like DGM's
   vertices with exactly k core neighbors. They are the ones that tip the network.
 - **Our check of their result:** our own pruning code (`code/kcore.py`), run on simulated 100,000-vertex Erdős–Rényi graphs, finds every k-core
-  (k = 2 … 7) vanishing within about **0.01** of DGM's thresholds. This also validates our simulation tooling.
+  (k = 2 … 7) vanishing within about **0.01** of the thresholds from DGM's equations. This checks our pruning code.
 
 ## Weaknesses we named (from our paper)
 

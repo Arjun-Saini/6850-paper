@@ -128,7 +128,7 @@ network has to jump from "pretty good" straight to "zero".
 
 ![The cliff](figures/cliff.svg)
 
-**How we checked it:** in simulations with no shock (validation, E1), the k = 2, m = 1 networks drop from about 0.74 to 0 at x ≈ 0.725, matching the theory.
+**How we checked it:** in theory, reliability for m = 1, k = 2 drops from about 0.74 to 0 at x ≈ 0.725. The no-shock simulations (validation, E1; paper Figure 1a) track the 20-layer curve, which breaks slightly lower.
 
 ---
 
@@ -232,6 +232,7 @@ cluster pattern. Each run is compared with **20 steps** of the equation, evaluat
 
 **Why two theory columns in the table (infinite vs 20 layers)?** A finite network has less depth for failures to build up, so its
 thresholds sit a bit *higher* than the infinite-depth ones. We compare simulations with the 20-layer theory, and they match it.
+This is also why co-located and spread don't tie exactly at 20 layers with one input: Claim 2(b)'s tie is an infinite-depth statement.
 
 **From code to paper:**
 

@@ -53,6 +53,35 @@ if "--no-mermaid" not in sys.argv:
             if r.returncode:
                 fails.append(f"{os.path.relpath(path, PREP)}: mermaid block {i} fails: {(r.stderr or r.stdout)[-200:]}")
 
+# 3b. regressions from the independent review: phrases that misstate the paper, and required coverage
+FORBIDDEN = {
+    "01-opening-summary.md": ["or a disaster that knocks out a whole region at once", "2 protections we add",
+                              "DGM = k-cores vanish abruptly", "The math gives four results",
+                              "through real supplier links"],
+    "04-qa-bank.md": ["confirms the K = k + 1 analogy numerically", "It's exact in the model", "the same equation as DGM's",
+                      "reproduces DGM's published k-core thresholds", "which our framework can describe"],
+    "03-papers/dgm.md": ["This also validates our simulation tooling"],
+    "03-papers/egl.md": ["Multisourcing\n   protects against *independent* failures but not against *correlated* ones",
+                         "Multisourcing protects against *independent* failures but not against *correlated* ones"],
+    "05-cheatsheet.md": ["Spreading suppliers out is mathematically **the same as weakening every relationship**"],
+    "02-our-work-explained.md": ["in simulations with no shock (validation, E1), the k = 2, m = 1 networks drop from about 0.74 to 0"],
+}
+for rel, bad in FORBIDDEN.items():
+    body = open(os.path.join(PREP, rel)).read()
+    for phrase in bad:
+        if phrase.replace("\\n", "\n") in body:
+            fails.append(f"{rel}: still contains reviewed-out phrase: {phrase[:60]}")
+if m:
+    segs = re.split(r"\*\*\[[123]\]\*\*", m.group(1))[1:]
+    for i, seg in enumerate(segs[:2], 1):
+        if not re.search(r"simulat|pruning code", seg):
+            fails.append(f"opening part [{i}] does not mention simulations")
+    if not re.search(r"k of three or more|k ≥ 3|three or more", segs[0] if segs else ""):
+        fails.append("opening does not qualify DGM's abrupt collapse to k >= 3")
+qa_text = open(os.path.join(PREP, "04-qa-bank.md")).read()
+if "infinite-depth statement" not in qa_text:
+    fails.append("Q&A lacks the finite-depth (Table 1 co-located vs spread at 20 layers) item")
+
 # 4. Q&A format
 qa = os.path.join(PREP, "04-qa-bank.md")
 n_q = 0

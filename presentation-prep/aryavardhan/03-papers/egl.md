@@ -31,8 +31,8 @@ protect itself, not its customers, so firms tend to stop investing just short of
 2. **Equilibrium bunches at the edge (their Theorem 1, proved for m ≥ 3):** for a whole range of investment costs, equilibrium strength
    sits within a hair of x_crit. Reliability is so steep there that each firm's best response lands on the steep part.
 3. **Inefficiency:** a planner **never** puts the network near x_crit, because near the threshold the social value of investing a bit more is enormous.
-4. **Fragility:** in that critical regime, a tiny drop in baseline relationship quality (a systemic shock) collapses production. Multisourcing
-   protects against *independent* failures but not against *correlated* ones.
+4. **Fragility:** in that critical regime, a tiny drop in baseline relationship quality (their systemic shock is a uniform drop in strength)
+   collapses production. Multisourcing absorbs idiosyncratic failures, but EGL do not model correlated (regional) failures. That is our addition.
 
 ![The cliff (our figure, computed with our model; the m = 2, k = 1 curve is EGL's case)](../figures/cliff.svg)
 

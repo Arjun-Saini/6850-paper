@@ -101,7 +101,7 @@ ax.annotate("p = 2/3: sign change", (2 / 3, 0.55), xytext=(-118, 0), textcoords=
 ax.plot([p_thr], [2 * p_thr ** 2 - float(S(2, 4, p_thr))], "o", ms=8, color=ORANGE, mec=SURF, mew=2)
 ax.annotate(f"near the pairs tipping point\np = x·r* ≈ {p_thr:.2f}: pairs worse", (p_thr, 2 * p_thr ** 2 - float(S(2, 4, p_thr))),
             xytext=(-200, 40), textcoords="offset points", fontsize=9, arrowprops=dict(arrowstyle="-", color=INK2, lw=0.8))
-ax.annotate("pairs better (above 0)", (0.70, -0.15), fontsize=9, color=INK2)
+ax.annotate("pairs better\n(above 0)", (0.80, 0.03), fontsize=9, color=INK2)
 ax.annotate("pairs worse\n(shaded)", (0.30, -0.12), fontsize=9, color=INK2)
 ax.set(xlabel="p = chance a surviving supplier is usable", ylabel="2p² − S₂(4, p)",
        title="Pairs minus co-located coverage = sφ · [2p² − S₂(4, p)]")
