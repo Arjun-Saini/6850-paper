@@ -29,15 +29,15 @@ export function coverage(r, phi, P) {           // P[an input has >= k usable su
 export function F(r, phi, P) { return Math.pow(coverage(r, phi, P), P.m); }
 
 const GRID_N = 4000;
-export function rStar(phi, P) {                 // largest root of F(r) = r on (0, 1], else 0
+export function rStar(phi, P, gridN = GRID_N) {  // largest root of F(r) = r on (0, 1], else 0
   const g = (r) => F(r, phi, P) - r;
   if (g(1) >= 0) return 1;
   let last = -1;
-  for (let i = GRID_N; i >= 1; i--) {            // scan down from r = 1 for the first r with g >= 0
-    if (g(i / GRID_N) >= 0) { last = i; break; }
+  for (let i = gridN; i >= 1; i--) {             // scan down from r = 1 for the first r with g >= 0
+    if (g(i / gridN) >= 0) { last = i; break; }
   }
   if (last < 0) return 0;
-  let lo = last / GRID_N, hi = (last + 1) / GRID_N;
+  let lo = last / gridN, hi = (last + 1) / gridN;
   for (let t = 0; t < 50; t++) { const mid = (lo + hi) / 2; if (g(mid) >= 0) lo = mid; else hi = mid; }
   const r = (lo + hi) / 2;
   return r > 1e-4 ? r : 0;

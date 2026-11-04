@@ -1,0 +1,278 @@
+<title>Supply Cascades Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,650&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: sticky tab bar over a single reading column; the explorer and flashcards use a two-column grid that stacks on phones. */
+:root {
+  --bg: #f4f6f8; --surface: #ffffff; --fg: #15191f; --muted: #5b6472; --line: #dbe0e7;
+  --accent: #1d6a86; --accent-soft: #e3f0f5; --warn-soft: #fbe9e1; --warn: #a8461f;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  --figure-bg: #ffffff;
+  --font-display: "Literata", Georgia, "Times New Roman", serif;
+  --font-body: "Public Sans", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151a; --surface: #192028; --fg: #e7ebf0; --muted: #a2abb8; --line: #2b343f;
+    --accent: #62b6d4; --accent-soft: #17323d; --warn-soft: #3b2219; --warn: #f0a07c;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+    --figure-bg: #f7f8fa; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151a; --surface: #192028; --fg: #e7ebf0; --muted: #a2abb8; --line: #2b343f;
+  --accent: #62b6d4; --accent-soft: #17323d; --warn-soft: #3b2219; --warn: #f0a07c;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --figure-bg: #f7f8fa; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font-body); margin: 0; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+.wrap { max-width: 980px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 20px; padding-block: 10px 0; }
+.brand { font: 650 1.15rem/1.2 var(--font-display); margin: 0; }
+.brand small { display: block; font: 400 0.78rem/1.3 var(--font-body); color: var(--muted); }
+nav.tabs { display: flex; gap: 2px; overflow-x: auto; width: 100%; scrollbar-width: none; }
+nav.tabs button { font: 600 0.9rem var(--font-body); color: var(--muted); background: none; border: 0; border-bottom: 3px solid transparent; padding: 8px 12px 9px; cursor: pointer; white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+nav.tabs button:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+main { padding-block: 24px 64px; }
+section.panel { min-width: 0; }
+/* prose */
+.prose { max-width: 72ch; min-width: 0; }
+.prose h1 { font: 650 1.75rem/1.25 var(--font-display); text-wrap: balance; margin: 0 0 12px; }
+.prose h2 { font: 650 1.3rem/1.3 var(--font-display); text-wrap: balance; margin: 36px 0 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+.prose h3 { font: 600 1.05rem/1.4 var(--font-body); margin: 24px 0 6px; }
+.prose p, .prose li { max-width: 72ch; }
+.prose blockquote { margin: 16px 0; padding: 12px 16px; background: var(--accent-soft); border-radius: 6px; }
+.prose blockquote p { margin: 4px 0; }
+.prose code { font: 0.88em var(--font-mono); background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+.prose hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+.prose a { color: var(--accent); }
+.table-wrap { overflow-x: auto; margin: 12px 0; max-width: 100%; }
+.prose table { border-collapse: collapse; font-size: 0.92rem; min-width: 100%; }
+.prose th, .prose td { text-align: left; vertical-align: top; padding: 6px 10px; border-bottom: 1px solid var(--line); }
+.prose th { font-weight: 600; color: var(--muted); font-size: 0.82rem; letter-spacing: 0.02em; }
+.diagram, .figure { background: var(--figure-bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 16px 0; overflow-x: auto; max-width: 100%; }
+.diagram svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+.figure img { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+.figure figcaption { color: #4a5260; font-size: 0.85rem; text-align: center; margin-top: 4px; }
+/* papers sub-nav */
+.subnav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.chip { font: 600 0.85rem var(--font-body); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+/* flashcards */
+.cards-bar { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-bottom: 16px; }
+.cards-bar select, .cards-bar button, .ex-controls select { font: 0.9rem var(--font-body); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+#cards-group { max-width: 100%; min-width: 0; flex: 1 1 180px; }
+.counter { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+#card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 240px; cursor: pointer; display: flex; flex-direction: column; gap: 12px; max-width: 72ch; }
+#card .group { font: 600 0.75rem var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+#card .q { font: 650 1.25rem/1.35 var(--font-display); text-wrap: balance; }
+#card .star { color: var(--warn); }
+#card .back { border-top: 1px solid var(--line); padding-top: 12px; }
+#card .back p { margin: 6px 0; }
+#card .hint { color: var(--muted); font-size: 0.85rem; margin-top: auto; }
+.cards-nav { display: flex; gap: 8px; margin-top: 12px; }
+.cards-nav button { font: 600 0.9rem var(--font-body); padding: 8px 16px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+details.all-q { margin-top: 32px; }
+details.all-q summary { cursor: pointer; font-weight: 600; }
+/* explorer */
+.ex-grid { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 24px; align-items: start; }
+.ex-controls { display: flex; flex-direction: column; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.ex-controls label { display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 600; }
+.ex-controls output { font: 0.88rem var(--font-mono); color: var(--accent); }
+.ex-controls input[type=range] { width: 100%; accent-color: var(--accent); }
+.presets { display: flex; flex-wrap: wrap; gap: 6px; }
+#ex-note { font-size: 0.88rem; color: var(--muted); margin: 0; min-height: 3em; }
+.plots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; min-width: 0; }
+.plot { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 10px 6px; position: relative; min-width: 0; }
+.plot.wide { grid-column: 1 / -1; }
+.plot h4 { margin: 0 0 4px; font: 600 0.88rem var(--font-body); }
+.plot svg { width: 100%; height: auto; display: block; }
+.plot svg .grid { stroke: var(--line); stroke-width: 1; }
+.plot svg .axis { stroke: var(--muted); stroke-width: 1; }
+.plot svg .vline { stroke-width: 1.5; stroke-dasharray: 3 3; }
+.plot svg .tick { fill: var(--muted); font: 10px var(--font-body); }
+.plot svg .axlabel { fill: var(--fg); font: 11px var(--font-body); }
+#ex-tip { position: absolute; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; font-size: 0.8rem; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.12); min-width: 150px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.85rem; margin: 2px 0 4px; }
+.swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+#ex-readout table { border-collapse: collapse; font-size: 0.9rem; font-variant-numeric: tabular-nums; width: 100%; }
+#ex-readout th, #ex-readout td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); }
+#ex-readout tr.worst td { background: var(--warn-soft); font-weight: 600; }
+.verdict.abrupt strong { color: var(--warn); }
+.verdict.smooth strong { color: var(--accent); }
+#ex-status { color: var(--muted); font-size: 0.85rem; min-height: 1.2em; }
+.lead { font-size: 1.02rem; color: var(--muted); max-width: 72ch; }
+@media (max-width: 760px) {
+  .ex-grid { grid-template-columns: minmax(0, 1fr); }
+  .plots { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <p class="brand">Supply Cascades Study Guide<small>CS/INFO 6850 · one-on-one presentation prep · Saini &amp; Singh</small></p>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" data-tab="opening" id="tab-opening" aria-selected="true">Opening</button>
+      <button role="tab" data-tab="our-work" id="tab-our-work" aria-selected="false">Our work</button>
+      <button role="tab" data-tab="papers" id="tab-papers" aria-selected="false">Papers</button>
+      <button role="tab" data-tab="flashcards" id="tab-flashcards" aria-selected="false">Flashcards</button>
+      <button role="tab" data-tab="explorer" id="tab-explorer" aria-selected="false">Explorer</button>
+      <button role="tab" data-tab="cheatsheet" id="tab-cheatsheet" aria-selected="false">Cheatsheet</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel prose" id="panel-opening" role="tabpanel">{{OPENING}}</section>
+  <section class="panel prose" id="panel-our-work" role="tabpanel" hidden>{{OURWORK}}</section>
+  <section class="panel" id="panel-papers" role="tabpanel" hidden>
+    <div class="subnav" role="group" aria-label="Papers">
+      <button class="chip" data-paper="egl" aria-pressed="true">EGL 2022</button>
+      <button class="chip" data-paper="cnst" aria-pressed="false">CNST 2021</button>
+      <button class="chip" data-paper="dgm" aria-pressed="false">DGM 2006</button>
+      <button class="chip" data-paper="prior" aria-pressed="false">Closest prior work</button>
+      <button class="chip" data-paper="course" aria-pressed="false">Course references</button>
+    </div>
+    <article class="prose paper" id="paper-egl">{{EGL}}</article>
+    <article class="prose paper" id="paper-cnst" hidden>{{CNST}}</article>
+    <article class="prose paper" id="paper-dgm" hidden>{{DGM}}</article>
+    <article class="prose paper" id="paper-prior" hidden>{{PRIOR}}</article>
+    <article class="prose paper" id="paper-course" hidden>{{COURSE}}</article>
+  </section>
+  <section class="panel" id="panel-flashcards" role="tabpanel" hidden>
+    <div class="prose"><h1>Flashcards</h1>
+      <p class="lead">Say your answer out loud, then tap the card to compare. ★ marks the questions staff are most likely to ask. Answer with the idea, not the numbers.</p></div>
+    <div class="cards-bar">
+      <label for="cards-group">Topic</label>
+      <select id="cards-group"></select>
+      <label><input type="checkbox" id="cards-star"> ★ only</label>
+      <button type="button" id="cards-shuffle">Shuffle</button>
+      <span class="counter" id="cards-count"></span>
+    </div>
+    <div id="card" tabindex="0" role="button" aria-label="Flashcard: press to reveal the answer">
+      <div class="group"></div><div class="q"></div>
+      <div class="back" hidden></div>
+      <div class="hint">Tap or press Space to reveal · ← → to move</div>
+    </div>
+    <div class="cards-nav"><button type="button" id="cards-prev">← Previous</button><button type="button" id="cards-next">Next →</button></div>
+    <details class="all-q prose"><summary>Show the whole Q&amp;A bank as a list</summary>{{QABANK}}</details>
+  </section>
+  <section class="panel" id="panel-explorer" role="tabpanel" hidden>
+    <div class="prose"><h1>Model explorer</h1>
+      <p class="lead">Our model, live: the same equation as the paper, computed in your browser (checked against our Python code). Move one slider at a time and say out loud what you expect before you look.</p></div>
+    <div class="ex-grid" id="explorer">
+      <div class="ex-controls">
+        <div><div class="presets">
+          <button class="chip" type="button" data-preset="smooth" aria-pressed="false">Smooth (k=m=1)</button>
+          <button class="chip" type="button" data-preset="egl" aria-pressed="false">EGL cliff</button>
+          <button class="chip" type="button" data-preset="newcliff" aria-pressed="false">Our new cliff</button>
+          <button class="chip" type="button" data-preset="pairs" aria-pressed="true">Pairs are worst</button>
+          <button class="chip" type="button" data-preset="twoinputs" aria-pressed="false">Two inputs</button>
+        </div></div>
+        <p id="ex-note">Example 1: with k = 2, two pairs (c = 2) break at a smaller shock than both co-located and spread.</p>
+        <div><label for="ex-k">k · suppliers needed per input <output id="ex-k-out"></output></label><input type="range" id="ex-k" min="1" max="4" step="1"></div>
+        <div><label for="ex-m">m · inputs per firm <output id="ex-m-out"></output></label><input type="range" id="ex-m" min="1" max="3" step="1"></div>
+        <div><label for="ex-n">n · suppliers per input</label><select id="ex-n"><option value="2">2</option><option value="4">4</option><option value="6">6</option><option value="8">8</option></select></div>
+        <div><label for="ex-c">c · regional clusters</label><select id="ex-c"></select></div>
+        <div><label for="ex-x">x · relationship strength <output id="ex-x-out"></output></label><input type="range" id="ex-x" min="0.3" max="1" step="0.005"></div>
+        <div><label for="ex-phi">φ · chance a region is hit <output id="ex-phi-out"></output></label><input type="range" id="ex-phi" min="0" max="0.6" step="0.0025"></div>
+        <div id="ex-status" aria-live="polite"></div>
+      </div>
+      <div class="plots">
+        <div class="plot"><h4>Cliff: reliability vs strength x</h4><svg id="ex-plot-cliff" role="img" aria-label="Reliability against relationship strength"></svg></div>
+        <div class="plot"><h4>Fixed point: F(r) vs the diagonal</h4><svg id="ex-plot-fp" role="img" aria-label="F of r against the diagonal"></svg></div>
+        <div class="plot wide"><h4>Geography: reliability vs shock for every split</h4><div class="legend" id="ex-legend"></div><svg id="ex-plot-geo" role="img" aria-label="Reliability against shock size for each number of clusters"></svg><div id="ex-tip" hidden></div></div>
+        <div class="plot wide" id="ex-readout" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+  <section class="panel prose" id="panel-cheatsheet" role="tabpanel" hidden>{{CHEATSHEET}}</section>
+</main>
+
+<script>
+window.__cards = {{CARDS_JSON}};
+</script>
+<script>
+{{EXPLORER_MATH}}
+</script>
+<script>
+{{EXPLORER_UI}}
+</script>
+<script>
+(function () {
+  const tabs = ["opening", "our-work", "papers", "flashcards", "explorer", "cheatsheet"];
+  function show(name) {
+    if (!tabs.includes(name)) name = "opening";
+    for (const t of tabs) {
+      document.getElementById("panel-" + t).hidden = t !== name;
+      document.getElementById("tab-" + t).setAttribute("aria-selected", t === name ? "true" : "false");
+    }
+    try { localStorage.setItem("prep-tab", name); } catch (e) {}
+  }
+  document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => {
+    show(b.dataset.tab);
+    if (location.hash !== "#" + b.dataset.tab) history.replaceState(null, "", "#" + b.dataset.tab);
+    window.scrollTo(0, 0);
+  }));
+  window.addEventListener("hashchange", () => show(location.hash.slice(1)));
+  let start = location.hash.slice(1);
+  if (!tabs.includes(start)) { try { start = localStorage.getItem("prep-tab") || "opening"; } catch (e) { start = "opening"; } }
+  show(start);
+  // cross-links between files become tab links
+  document.querySelectorAll("a[data-goto]").forEach((a) => a.addEventListener("click", (e) => {
+    e.preventDefault(); const [tab, paper] = a.dataset.goto.split(":"); show(tab);
+    if (paper) document.querySelector(`[data-paper="${paper}"]`).click(); window.scrollTo(0, 0);
+  }));
+  // papers sub-nav
+  document.querySelectorAll("[data-paper]").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll("[data-paper]").forEach((o) => o.setAttribute("aria-pressed", o === b ? "true" : "false"));
+    document.querySelectorAll("article.paper").forEach((a) => { a.hidden = a.id !== "paper-" + b.dataset.paper; });
+  }));
+  // flashcards
+  const all = window.__cards;
+  const groups = [...new Map(all.map((c) => [c.group, c.groupTitle])).entries()];
+  const sel = document.getElementById("cards-group");
+  sel.innerHTML = '<option value="">All topics</option>' + groups.map(([g, t]) => `<option value="${g}">${t}</option>`).join("");
+  let deck = all.slice(), i = 0;
+  const card = document.getElementById("card");
+  const back = card.querySelector(".back");
+  function rebuild() {
+    const g = sel.value, star = document.getElementById("cards-star").checked;
+    deck = all.filter((c) => (!g || c.group === g) && (!star || c.star));
+    i = 0; draw();
+  }
+  function draw() {
+    const c = deck[i];
+    document.getElementById("cards-count").textContent = deck.length ? `${i + 1} / ${deck.length}` : "0 cards";
+    if (!c) { card.querySelector(".q").textContent = "No cards match these filters."; card.querySelector(".group").textContent = ""; back.hidden = true; return; }
+    card.querySelector(".group").textContent = c.groupTitle;
+    card.querySelector(".q").innerHTML = c.q + (c.star ? ' <span class="star" aria-label="most likely">★</span>' : "");
+    back.innerHTML = `<p><strong>Short:</strong> ${c.short}</p><p><strong>If pushed:</strong> ${c.pushed}</p>`;
+    back.hidden = true;
+  }
+  const flip = () => { back.hidden = !back.hidden; };
+  card.addEventListener("click", flip);
+  card.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); } });
+  const move = (d) => { if (!deck.length) return; i = (i + d + deck.length) % deck.length; draw(); };
+  document.getElementById("cards-prev").addEventListener("click", () => move(-1));
+  document.getElementById("cards-next").addEventListener("click", () => move(1));
+  document.addEventListener("keydown", (e) => {
+    if (document.getElementById("panel-flashcards").hidden || e.target.tagName === "SELECT" || e.target.tagName === "INPUT") return;
+    if (e.key === "ArrowRight") move(1); if (e.key === "ArrowLeft") move(-1);
+  });
+  sel.addEventListener("change", rebuild);
+  document.getElementById("cards-star").addEventListener("change", rebuild);
+  document.getElementById("cards-shuffle").addEventListener("click", () => {
+    for (let j = deck.length - 1; j > 0; j--) { const r = Math.floor(Math.random() * (j + 1)); [deck[j], deck[r]] = [deck[r], deck[j]]; }
+    i = 0; draw();
+  });
+  draw();
+})();
+</script>
