@@ -32,7 +32,7 @@
 | **Fixed point** | where F(r) = r; reliability is the largest one. A tangency is where the high one disappears. |
 | **Branching process** | the k = m = 1 case: like a family tree that survives if each firm has > 1 working supplier on average. Smooth transition. |
 | **k-core** | what's left after repeatedly deleting vertices with fewer than k neighbors (DGM). |
-| **Corona** | DGM's core vertices with *exactly* k core neighbors; one more loss and they drop out. Our "barely sourced" firms are the analogue. |
+| **Corona** | core vertices with *exactly* k core neighbors; one more loss and they drop out (DGM 2006 describes them; the name is from the same authors' follow-up). Our "barely sourced" firms are the analogue. |
 | **Complex contagion** | Centola–Macy: adoption needs several contacts, not one. Our m ≥ 2 or k ≥ 2 failure rule is the reverse. |
 | **Threshold model** | Granovetter / Easley–Kleinberg §19.2: act when enough neighbors act. Our firms *fail* when too few suppliers remain. |
 | **Spread / pairs / co-located** | all suppliers in different regions / two regions with two suppliers each / all in one region. |
