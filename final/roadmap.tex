@@ -1,0 +1,24 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{amsmath,amssymb}
+\usepackage[hidelinks]{hyperref}
+\usepackage[expansion=false]{microtype}
+\usepackage{enumitem}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries Roadmap: When Does Spreading Suppliers Across Regions Backfire?}\\[4pt]
+Arjun Saini and Aryavardhan Singh
+\end{center}
+
+For the final project we will narrow the exploratory paper to one question: when does spreading a firm's suppliers across more regions make a supply network more fragile, and why? This builds on the result we found most interesting. When a firm needs only one working supplier, spreading suppliers across more regions never hurts. When it needs two, splitting suppliers into two regional groups can make the network collapse under a smaller regional shock than either keeping them together or spreading them out fully.
+
+We plan to treat this as a theoretical project with simulations, in three steps. First, we will work out exactly when an in-between split is the worst choice, starting with the small example from our exploratory paper and generalizing to other numbers of suppliers and regions. Second, we will explain why this effect shows up in the network as a whole: it matters most near the network's tipping point, and we will use this to explain which settings in our earlier grid search showed the reversal and which did not. Third, we will test how robust the result is with our existing simulator by relaxing the main assumptions: suppliers with different capacities, regional shocks that only partly damage a region, and networks that are not trees. We will relate the result to the supply-chain work discussed in our exploratory paper, especially the finding that dual sourcing can hurt a manufacturer.
+
+\end{document}
