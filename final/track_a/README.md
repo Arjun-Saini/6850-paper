@@ -18,7 +18,7 @@ python3 -m pytest final/track_a/tests
 | A5 Lemma A, general (n, k, c) | `code/lemma_a_general.py` | `results/lemma_a_general.json` | `notes/lemma_a_general.md` |
 | A7 Large-n limit | `code/large_n.py` | `results/large_n.json` | `notes/large_n.md` |
 
-## Status (Nov 17)
+## Status (Nov 17, end of run 1; next steps in HANDOFF.md)
 
 - **A3 (done):** the window is p₋(s) < p < 2/3 with p₋(s) = 2/(4s + √(2s(5s−3))), and it opens at s > (3−√3)/2.
 - **A6 (done):** Claim 3 holds for any refinement, unequal splits included. It does not hold for non-nested geographies with more clusters.
@@ -28,5 +28,5 @@ python3 -m pytest final/track_a/tests
     - Other c: edge limits plus a numerical characterization.
     - Still to do: cross-check against B1's grid once it lands.
 - **A7 (done):** formal limit. Every intermediate c is strictly worse than spread, and for m = 1 than co-location too. The swap of limits is not proved.
-- **A2 (citations):** runs after the freeze.
+- **A2 (citations, in progress):** all plan.md [VERIFY] references are verified, and k-out-of-n references were added (`refs_track_a.bib`, `notes/citations.md`). The Bai et al. (1991) abstract still needs checking.
 - **W2 (paper sections):** waits on agreeing the `final/paper/` layout with Arjun.
