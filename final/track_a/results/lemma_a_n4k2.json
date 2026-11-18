@@ -1,0 +1,58 @@
+{
+  "setting": {
+    "n": 4,
+    "k": 2,
+    "c_compared": [
+      1,
+      2,
+      4
+    ]
+  },
+  "upper_edge": {
+    "vs": "co-located",
+    "p": "2/3",
+    "p_float": 0.6666666666666666,
+    "bracket": "-p**2*(p - 2)*(3*p - 2)",
+    "note": "C2 - C1 = s(1-s)*bracket; edge does not depend on s"
+  },
+  "lower_edge": {
+    "vs": "spread",
+    "p_minus": "2/(sqrt(2)*sqrt(s)*sqrt(5*s - 3) + 4*s)",
+    "p_plus": "(sqrt(2)*sqrt(s)*sqrt(5*s - 3) + 4*s)/(3*s*(s + 1))",
+    "g": "3*p**2*s**2 + 3*p**2*s - 8*p*s + 2",
+    "discriminant": "8*s*(5*s - 3)",
+    "note": "C2 - C4 = s(1-s)p^2*g; pairs < spread iff p_minus < p < p_plus (needs s >= 3/5)"
+  },
+  "window": "p_minus(s) < p < 2/3, nonempty iff s > s_open",
+  "s_open": {
+    "exact": "3/2 - sqrt(3)/2",
+    "float": 0.6339745962155614
+  },
+  "p_minus_limit_s_to_1": "1/3",
+  "table": [
+    {
+      "s": 0.6,
+      "p_lo": 0.8333333333333334,
+      "p_hi": 0.6666666666666666,
+      "open": false
+    },
+    {
+      "s": 0.8,
+      "p_lo": 0.447937253688113,
+      "p_hi": 0.6666666666666666,
+      "open": true
+    },
+    {
+      "s": 0.9,
+      "p_lo": 0.3814487967806046,
+      "p_hi": 0.6666666666666666,
+      "open": true
+    },
+    {
+      "s": 0.95,
+      "p_lo": 0.35565303591884,
+      "p_hi": 0.6666666666666666,
+      "open": true
+    }
+  ]
+}
