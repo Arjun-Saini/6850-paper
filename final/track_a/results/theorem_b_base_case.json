@@ -1,0 +1,171 @@
+{
+  "setting": {
+    "x": 0.9,
+    "m": 1,
+    "n": 4,
+    "k": 2
+  },
+  "phi_star": {
+    "spread": 0.19462013244628906,
+    "pairs": 0.17053985595703125,
+    "co-located": 0.19462013244628906
+  },
+  "pairs_tangency": {
+    "phi": 0.17053985595703125,
+    "s": 0.8294601440429688,
+    "r_P": 0.6787453013333586,
+    "p": 0.6108707712000228
+  },
+  "F_at_r_P": {
+    "spread": 0.697471649667911,
+    "pairs": 0.6787453013333585,
+    "co-located": 0.6910193053753343
+  },
+  "hypothesis_holds": {
+    "spread": true,
+    "co-located": true
+  },
+  "conclusion_holds": {
+    "spread": true,
+    "co-located": true
+  },
+  "lemma_a_window_at_s": {
+    "p_lo": 0.4257642844186145,
+    "p_hi": 0.6666666666666666,
+    "p_in_window": true
+  },
+  "other_cases_n4k2": [
+    {
+      "m": 1,
+      "x": 0.95,
+      "vs": "spread",
+      "phi_pairs": 0.2114715576171875,
+      "r_P": 0.6705100196052398,
+      "F_X_at_r_P": 0.6909127913969452,
+      "phi_X": 0.23700809478759766,
+      "hypothesis": true,
+      "conclusion": true
+    },
+    {
+      "m": 1,
+      "x": 0.95,
+      "vs": "co-located",
+      "phi_pairs": 0.2114715576171875,
+      "r_P": 0.6705100196052398,
+      "F_X_at_r_P": 0.6787219347293679,
+      "phi_X": 0.23700809478759766,
+      "hypothesis": true,
+      "conclusion": true
+    },
+    {
+      "m": 1,
+      "x": 1.0,
+      "vs": "spread",
+      "phi_pairs": 0.2499990463256836,
+      "r_P": 0.6677298119035686,
+      "F_X_at_r_P": 0.6886960373758019,
+      "phi_X": 0.2751579284667969,
+      "hypothesis": true,
+      "conclusion": true
+    },
+    {
+      "m": 1,
+      "x": 1.0,
+      "vs": "co-located",
+      "phi_pairs": 0.2499990463256836,
+      "r_P": 0.6677298119035686,
+      "F_X_at_r_P": 0.667374583353704,
+      "phi_X": 0.2751579284667969,
+      "hypothesis": false,
+      "conclusion": true
+    },
+    {
+      "m": 2,
+      "x": 0.95,
+      "vs": "spread",
+      "phi_pairs": 0.07994651794433594,
+      "r_P": 0.8362571861149548,
+      "F_X_at_r_P": 0.8794768505771335,
+      "phi_X": 0.12517166137695312,
+      "hypothesis": true,
+      "conclusion": true
+    },
+    {
+      "m": 2,
+      "x": 0.95,
+      "vs": "co-located",
+      "phi_pairs": 0.07994651794433594,
+      "r_P": 0.8362571861149548,
+      "F_X_at_r_P": 0.7974798029439335,
+      "phi_X": 0.06467723846435547,
+      "hypothesis": false,
+      "conclusion": false
+    },
+    {
+      "m": 2,
+      "x": 1.0,
+      "vs": "spread",
+      "phi_pairs": 0.11355209350585938,
+      "r_P": 0.8379012253246205,
+      "F_X_at_r_P": 0.8931102616158014,
+      "phi_X": 0.1689128875732422,
+      "hypothesis": true,
+      "conclusion": true
+    },
+    {
+      "m": 2,
+      "x": 1.0,
+      "vs": "co-located",
+      "phi_pairs": 0.11355209350585938,
+      "r_P": 0.8379012253246205,
+      "F_X_at_r_P": 0.7624457053646352,
+      "phi_X": 0.08835983276367188,
+      "hypothesis": false,
+      "conclusion": false
+    },
+    {
+      "m": 3,
+      "x": 0.95,
+      "vs": "spread",
+      "phi_pairs": 0.04452037811279297,
+      "r_P": 0.8832575290762188,
+      "F_X_at_r_P": 0.9224808620962912,
+      "phi_X": 0.08547496795654297,
+      "hypothesis": true,
+      "conclusion": true
+    },
+    {
+      "m": 3,
+      "x": 0.95,
+      "vs": "co-located",
+      "phi_pairs": 0.04452037811279297,
+      "r_P": 0.8832575290762188,
+      "F_X_at_r_P": 0.8345113080640129,
+      "phi_X": 0.029344558715820312,
+      "hypothesis": false,
+      "conclusion": false
+    },
+    {
+      "m": 3,
+      "x": 1.0,
+      "vs": "spread",
+      "phi_pairs": 0.07390880584716797,
+      "r_P": 0.8861965150625999,
+      "F_X_at_r_P": 0.9413167492146937,
+      "phi_X": 0.13120174407958984,
+      "hypothesis": true,
+      "conclusion": true
+    },
+    {
+      "m": 3,
+      "x": 1.0,
+      "vs": "co-located",
+      "phi_pairs": 0.07390880584716797,
+      "r_P": 0.8861965150625999,
+      "F_X_at_r_P": 0.7814777410497653,
+      "phi_X": 0.04579925537109375,
+      "hypothesis": false,
+      "conclusion": false
+    }
+  ]
+}
