@@ -28,5 +28,5 @@ python3 -m pytest final/track_a/tests
     - Other c: edge limits plus a numerical characterization.
     - Still to do: cross-check against B1's grid once it lands.
 - **A7 (done):** formal limit. Every intermediate c is strictly worse than spread, and for m = 1 than co-location too. The swap of limits is not proved.
-- **A2 (citations, in progress):** all plan.md [VERIFY] references are verified, and k-out-of-n references were added (`refs_track_a.bib`, `notes/citations.md`). The Bai et al. (1991) abstract still needs checking.
+- **A2 (citations, done Nov 18):** all plan.md [VERIFY] references are verified, and two k-out-of-n references were added and verified (`refs_track_a.bib`, `notes/citations.md`).
 - **W2 (paper sections):** waits on agreeing the `final/paper/` layout with Arjun.

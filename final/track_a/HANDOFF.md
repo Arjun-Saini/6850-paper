@@ -13,7 +13,7 @@ All Phase 1 theory is done except the evidence part of A4, which waits on Arjun'
 | A4 Theorem B | **Blocked** (on B2) | `code/theorem_b_base_case.py`, `notes/theorem_b.md`. Proof is complete (Lemmas 1–2 + theorem + corollary). Base case reproduced from code. The condition is **sufficient, not necessary** (m=1, x=1 vs co-located) | Evidence section from B2's 109-setting output, then Done |
 | A5 Lemma A, general | Done | `code/lemma_a_general.py`, `notes/lemma_a_general.md`. c=2 proved for all (n, k) with an s-free cutoff p̂(n, k); other c: s→0 / s→1 limits + numerics. Monotonicity of the edge in s is numerical only | Cross-check vs B1 grid data |
 | A7 Large-n limit | Done | `code/large_n.py`, `notes/large_n.md`. Formal limit: every intermediate c is strictly worse than spread (Markov), and than co-location when m=1. Finite n up to 160 keeps the ordering; convergence is slow | The swap of limits is not proved; say so in §6 |
-| A2 Citations | In progress | `refs_track_a.bib` (draft location), `notes/citations.md`. All four plan.md [VERIFY] refs verified; two summaries reworded. Added Kuo & Zuo 2003 (verified) and Bai–Yun–Chung 1991 | **Bai et al. content is unverified**: its abstract couldn't be fetched (see notes). Then mark A2 Done |
+| A2 Citations | Done (Nov 18) | `refs_track_a.bib` (draft location), `notes/citations.md`. All four plan.md [VERIFY] refs verified; two summaries reworded. Added Kuo & Zuo 2003 and Bai–Yun–Chung 1991, both verified (Bai et al. from the PDF the user supplied) | Nothing |
 | A1 Roadmap | Done | Submitted Nov 16 as `final/roadmap.tex` stands | Nothing |
 | W2 Paper §2, §4–6 | To do | Write-ups in `notes/` are the source material | Waits on the paper layout (below) and F1 |
 
@@ -31,7 +31,6 @@ All Phase 1 theory is done except the evidence part of A4, which waits on Arjun'
 | Arjun | B2 109-setting output | A4 → Done; Handoffs row "109-setting results (B2)" |
 | Arjun | B1 `cov()` + grid data, and the path where `cov()` lives | Cross-checks for A3/A5; Handoffs rows "cov() function…" and "Grid data…" |
 | Arjun | Answer on the `final/paper/` layout | W2 |
-| User | Bai, Yun & Chung (1991) abstract from IEEE Xplore (doi 10.1109/24.75334) | A2 → Done |
 
 ## Start-of-run checklist for run 2
 
@@ -42,15 +41,15 @@ All Phase 1 theory is done except the evidence part of A4, which waits on Arjun'
    - Sheet doc id `1c3f8e42-23af-440c-aa53-151375605d28` (link https://claude.ai/artifact/4VKMpnrcEuiiasLQKBq8CF); workbook node `e38670b0-b22c`, engine `workbook`.
    - Track A rows: A2 = row 4, A3 = 5, A1 = 6, A6 = 7, A4 = 8, A5 = 9, A7 = 10, W2 = 11. Status is column D (To do / In progress / Blocked / Done), Notes is column H.
    - Handoffs: Done checkbox in column F. Row 2 = B1 cov() → A, row 3 = A3 edges → B (ticked), row 4 = B2 → A, row 5 = B1 grid → A, row 6 = freeze, row 7 = framing sentence (A → B, Nov 21), row 8 = swap sections.
-   - Every `applyEdits` needs the current `revision` as `base`. Run 1 ended at revision 19; read first, because Arjun may have edited since.
-5. Ask the user the open questions: has Arjun answered on the layout, and does the user have the Bai et al. abstract.
+   - Every `applyEdits` needs the current `revision` as `base`. Run 1 ended at revision 20 (A2 marked Done on Nov 18); read first, because Arjun may have edited since.
+5. Ask the user the open question: has Arjun answered on the layout.
 
 ## Task plan for run 2 (in order)
 
 1. **Bring in Arjun's work.**
    - If B2 has landed: add an "Evidence" section to `notes/theorem_b.md` from B2's output. Count the settings where the pairs tipping point (1 − φ\*_P, x·r_P) lies in the single-firm window (pairs strictly below both extremes there) and compare with where the network reversal occurred. Because the condition is only sufficient, expect reversals outside the window; report how many and how far from the edge. Cite B2's file and do not rerun the 109 settings. Then set A4 to Done and tick Handoffs row 4.
    - If B1 has landed: add a test importing Arjun's `cov()` that checks it against `lemma_a_n4k2` and `lemma_a_general`, then tick Handoffs rows 2 and 5. If his `cov()` disagrees with `model.F`, report it to the user and don't fix his code.
-2. **A2 wrap-up.** Once the Bai et al. abstract is checked, update `notes/citations.md` and mark A2 Done. If it can't be checked, use Chae & Clark (1986) or drop the common-cause citation.
+2. **A2 is done** (Nov 18, before run 2). Nothing to do unless W6 asks for the Crossref check of the exploratory paper's references.
 3. **Handoff, Nov 21: a one-sentence framing for the slides** (Handoffs row 7). Draft for the user to approve or edit:
    > When firms need more than one supplier to keep running, splitting suppliers across two regions can make a supply network more fragile than either keeping them together or spreading them out, and the network's own cascades push it into exactly the conditions where this happens.
 4. **P1 slides (Track B owns, Track A edits).** Check every Track A number on the slides against `results/*.json`.
